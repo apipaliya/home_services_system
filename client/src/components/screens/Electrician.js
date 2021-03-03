@@ -1,5 +1,7 @@
 import React, { useState, useEffect, Card } from "react";
 import NavBar from "../Navbar";
+import Footer from "../Footer";
+
 import {
   MDBBtn,
   MDBRow,
@@ -72,6 +74,7 @@ const Electrician = () => {
           </div>
         ))}
       </MDBRow>
+      <Footer />
     </>
   );
 };
