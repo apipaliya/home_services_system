@@ -1,6 +1,6 @@
-import React,{useEffect,createContext,useReducer,useContext} from 'react';
+import React, { useEffect, createContext, useReducer, useContext } from 'react';
 import './App.css'
-import { BrowserRouter, Route,useHistory,Switch } from "react-router-dom";
+import { BrowserRouter, Route, useHistory, Switch } from "react-router-dom";
 import Home from './components/screens/Home'
 import Signup from './components/screens/Signup'
 import Signuppro from './components/screens/Signuppro'
@@ -13,9 +13,9 @@ import ProHome from './components/screens/ProHome'
 
 import NewPassword from './components/screens/Newpassword'
 import ProfilePro from './components/screens/Profilepro'
-import {reducer,initialState} from './reducers/userReducer'
+import { reducer, initialState } from './reducers/userReducer'
 import UserService from './components/screens/UserService';
-import  Admin  from './components/screens/Admin';
+import Admin from './components/screens/Admin';
 import AdminLogin from './components/screens/AdminLogin';
 import Carpenter from './components/screens/Carpenter';
 import UserCarpenter from './components/screens/UserCarpenter';
@@ -23,15 +23,16 @@ import Plumber from './components/screens/Plumber';
 import UserPlumber from './components/screens/UserPlumber';
 import Electrician from './components/screens/Electrician';
 import UserElectrician from './components/screens/UserElectrician';
-import  Pestcontrol  from './components/screens/Pestcontrol';
-import  UserPestcontrol  from './components/screens/UserPestcontrol';
+import Pestcontrol from './components/screens/Pestcontrol';
+import UserPestcontrol from './components/screens/UserPestcontrol';
+import Booking from './components/screens/Booking';
 
 export const UserContext = createContext()
 
 
 
 const Routing = () => {
-  
+
   const history = useHistory()
   // const { state, dispatch } = useContext(UserContext)
   // useEffect(() => {
@@ -45,12 +46,12 @@ const Routing = () => {
   // }, [])
   return (
     <Switch>
-    <Route exact path="/">
-      <Home />
-    </Route>
-    <Route exact path="/admin">
-      <Admin />
-    </Route>
+      <Route exact path="/">
+        <Home />
+      </Route>
+      <Route exact path="/admin">
+        <Admin />
+      </Route>
       <Route exact path="/signup">
         <Signup />
       </Route>
@@ -100,7 +101,7 @@ const Routing = () => {
         <UserPestcontrol />
       </Route>
       <Route exact path="/userService">
-        <UserService/>
+        <UserService />
       </Route>
       <Route path="/profilepro">
         <ProfilePro />
@@ -111,19 +112,22 @@ const Routing = () => {
       <Route path="/reset/:token">
         <NewPassword />
       </Route>
+      <Route exact path="/booking">
+        <Booking />
+      </Route>
     </Switch>
   )
 }
 
-  function App() {
-    
-    const [state,dispatch] = useReducer(reducer,initialState)
-    return (
-      <UserContext.Provider value={{state,dispatch}}>
+function App() {
+
+  const [state, dispatch] = useReducer(reducer, initialState)
+  return (
+    <UserContext.Provider value={{ state, dispatch }}>
       <BrowserRouter>
-        <Routing />        
+        <Routing />
       </BrowserRouter>
-      </UserContext.Provider>
-    );
-  }
-  export default App;
+    </UserContext.Provider>
+  );
+}
+export default App;
