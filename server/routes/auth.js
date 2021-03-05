@@ -325,6 +325,25 @@ router.post("/updatecharge", requireLogin, (req, res) => {
     });
 });
 
+router.post("/updateAvailable", requireLogin, (req, res) => {
+  const { available } = req.body;
+  const _id = req.userPro._id;
+  UserPro.findOneAndUpdate(
+    { _id },
+    {
+      $set: {
+        available,
+      },
+    }
+  )
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 router.get("/professionals", requireLogin, (req, res) => {
   UserPro.find({ available: true, valid: 1 })
     .then((userpros) => {
