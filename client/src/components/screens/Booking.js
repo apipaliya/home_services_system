@@ -1,10 +1,15 @@
 import React from 'react'
+import UserNavBar from "./UserNavbar";
+import Footer from "../Footer";
 
 export const Booking = () => {
     return (
-        <div>
-            <h1>This is booking page</h1>
-        </div>
+        <>
+            <UserNavBar />
+
+            <Footer />
+        </>
     )
 }
 
+export default Booking;
