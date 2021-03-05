@@ -39,3 +39,8 @@ a{
  margin-right: 2px;
 }
 
+.footer{
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}

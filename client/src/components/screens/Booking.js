@@ -1,6 +1,9 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import UserNavBar from "./UserNavbar";
+
+import React from 'react'
+import { Link } from 'react-router-dom'
+import Footer from '../Footer';
+import UserNavBar from './UserNavbar'
+
 
 const Booking = () => {
   return (
@@ -71,8 +74,10 @@ const Booking = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </>
   );
 };
-
+     
+    
 export default Booking;
