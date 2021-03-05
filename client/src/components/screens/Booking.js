@@ -1,15 +1,15 @@
 import React from 'react'
-import UserNavBar from "./UserNavbar";
-import Footer from "../Footer";
+import { Link } from 'react-router-dom'
+import UserNavBar from './UserNavbar'
 
-export const Booking = () => {
-    return (
-        <>
-            <UserNavBar />
+const Booking = () => {
+  return (
+    <>
+      <UserNavBar />
 
-            <Footer />
-        </>
-    )
+      <Footer />
+    </>
+  )
 }
 
 export default Booking;
