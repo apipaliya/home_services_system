@@ -128,7 +128,7 @@ const Signuppro =() => {
     
         </div>
       </div>
-      <Footer/>
+     
       </>
     )
 }
