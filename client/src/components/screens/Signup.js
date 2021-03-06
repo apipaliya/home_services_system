@@ -11,7 +11,7 @@ const Signup =() => {
     const [password,setPasword] = useState("")
     const [state,setState] = useState("")
     const [city,setCity] = useState("")
-    const [address,setAddress] = useState("")
+    
     const PostData =() => {
         if(!/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
             M.toast({html: "invalid email",classes:"#c62828 red darken-3"})
@@ -27,9 +27,7 @@ const Signup =() => {
                 email,
                 password,
                 state,
-                city,
-                address
-                
+                city
             })
         }).then(res=>res.json())
         .then(data=>{
@@ -70,12 +68,6 @@ const Signup =() => {
             value={password}
             onChange={(e)=>setPasword(e.target.value)}
             />
-            {/* <input
-            type="password"
-            placeholder="Confirm Password"
-            value={conpassword}
-            onChange={(e)=>setPasword(e.target.value)}
-            /> */}
             <input
             type="text"
             placeholder="State"
@@ -88,13 +80,6 @@ const Signup =() => {
             value={city}
             onChange={(e)=>setCity(e.target.value)}
             />
-            <input
-            type="text"
-            placeholder="Address"
-            value={address}
-            onChange={(e)=>setAddress(e.target.value)}
-            />
-
             <button className="btn waves-effect waves-light #64b5f6 blue darken-1"
             onClick={()=>PostData()}
             >

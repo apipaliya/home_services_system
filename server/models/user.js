@@ -19,11 +19,8 @@ const userSchema = new mongoose.Schema({
     city:{
         type:String,
         required:true
-    },    
-    address:{
-        type:String,
-        default:""
     }
+  
     
 })
 

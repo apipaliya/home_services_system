@@ -7,6 +7,15 @@ a{
   font-family: initial;
 }
 
+.card{
+  border-radius: 1.25rem !important;
+}
+
+.card-home {
+  display: block;
+  margin: 1rem 1rem;
+}
+
 .mycard{
   margin-top: 30px;
 }

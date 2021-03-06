@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import ProNavBar from "./ProNavbar";
 import { useHistory } from "react-router-dom";
 import Footer from "../Footer";
+import { MDBView } from "mdbreact";
+import M from "materialize-css";
 
 const ProfilePro = () => {
   const history = useHistory();
@@ -36,7 +38,10 @@ const ProfilePro = () => {
           if (data.error) {
             console.log(data.error);
           } else {
-            alert("Photo uploaded successfully.");
+            M.toast({
+              html: "Update Details successfully",
+              classes: "#43a047 green darken-1",
+            });
             history.push("/proHome");
           }
         })
@@ -59,7 +64,6 @@ const ProfilePro = () => {
         if (datadetail.error) {
           console.log(datadetail.error);
         } else {
-          console.log(datadetail);
           setdata(datadetail);
         }
       })
@@ -92,23 +96,26 @@ const ProfilePro = () => {
   return (
     <>
       <ProNavBar />
+
       <div className="container my-5">
         <div className="main-body">
           <div className="row gutters-sm">
             <div className="col-md-4 mb-3"></div>
             <div className="col-md-4 mb-3">
               <div className="card">
-                <div className="card-body">
+                <div className="card-body text-center font-bold">
                   <div className="d-flex flex-column align-items-center text-center">
-                    <img
-                      src={data.image}
-                      alt="Upload profile pic"
-                      className="rounded-circle"
-                      width="200"
-                      height="200"
-                    />
+                    <MDBView hover zoom>
+                      <img
+                        src={data.image}
+                        alt="Upload profile pic"
+                        className="rounded-circle img-fluid"
+                        width="200"
+                        height="200"
+                      />
+                    </MDBView>
                   </div>
-
+                  <hr />
                   {data.name}
                 </div>
               </div>
@@ -118,16 +125,18 @@ const ProfilePro = () => {
                     <label htmlFor="exampleFormControlFile1">
                       <b>Upload image</b>
                     </label>
+
                     <input
                       type="file"
-                      className="form-control-file"
+                      className="border-2 rounded-right btn-mdb-color"
                       id="exampleFormControlFile1"
                       onChange={(e) => {
                         setImage(e.target.files[0]);
                       }}
                     />
+
                     <button
-                      className="btn btn-primary mt-3"
+                      className="btn btn-primary mt-3 rounded"
                       id="buttn"
                       onClick={() => postDetails()}
                     >
@@ -140,7 +149,7 @@ const ProfilePro = () => {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 };

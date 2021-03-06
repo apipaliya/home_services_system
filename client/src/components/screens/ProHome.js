@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import ProNavBar from "./ProNavbar";
 import Switch from "react-switch";
 import Footer from "../Footer";
+import M from "materialize-css";
+
 import {
   MDBBtn,
   MDBRow,
@@ -19,9 +21,11 @@ const ProHome = () => {
   const [image, setImage] = useState("");
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
+
   const handleChange = (nextChecked) => {
     setAvailable(nextChecked);
   };
+
   const senddata = (e) => {
     e.preventDefault();
     console.log(charge);
@@ -42,7 +46,10 @@ const ProHome = () => {
         if (data.error) {
           console.log(data.error);
         } else {
-          alert("Update Details successfully.");
+          M.toast({
+            html: "Update Details successfully",
+            classes: "#43a047 green darken-1",
+          });
         }
       })
       .catch((err) => {
@@ -66,7 +73,6 @@ const ProHome = () => {
         if (data.error) {
           console.log(data.error);
         } else {
-          alert("Update Details successfully.");
         }
       })
       .catch((err) => {
@@ -104,91 +110,66 @@ const ProHome = () => {
     <>
       <ProNavBar />
 
-      <MDBRow className="px-0" style={{ backgroundColor: "#f2f2f2" }}>       
-            <MDBCol className="my-5 mx-5" style={{ maxWidth: "22rem" }}>
-              <MDBCard>
-                <MDBCardImage className="img-fluid" src={image} waves />
-                <MDBCardBody>
-                  <MDBCardTitle>{name}</MDBCardTitle>
-                  <MDBCardText>{address}</MDBCardText>
-                  <div className="flex">
-                    <span className="title-font font-medium text-2xl text-gray-900 left text-center py-2">
-                      {charge}&nbsp;Rupees/Hr
-                    </span>
-                    <MDBBtn
-                      href="#"
-                      className="flex ml-auto text-white border-0 py-2 px-4 focus:outline-none hover:#1e88e5 rounded "
-                    >
-                      Book
-                    </MDBBtn>
-                  </div>
-                </MDBCardBody>
-              </MDBCard>
-            </MDBCol>
-            <MDBCol className="my-5 mx-5" style={{ maxWidth: "22rem" }}>
-            <MDBCard>
+      <MDBRow className="px-0" style={{ backgroundColor: "#f2f2f2" }}>
+        <MDBCol className="my-5 mx-5" style={{ maxWidth: "22rem" }}>
+          <MDBCard>
+            <MDBCardImage className="img-fluid" src={image} waves />
             <MDBCardBody>
-            <h4>Price/Hr</h4>
-          <input
-            type="number"
-            placeholder="Amount"
-            value={charge}
-            onChange={(e) => setCharge(e.target.value)}
-          ></input>
-          <button
-            type="submit"
-            className="btn btn-primary"
-            onClick={(e) => senddata(e)}
-          >
-            Update
-          </button>
-          <hr/>
-          <div>
-            <label>
-              <span>Switch with default style</span>
-              <Switch
-                onChange={handleChange}
-                checked={available}
-                className="react-switch items-right"
-              />
-            </label>
-          </div>
-          </MDBCardBody>
+              <MDBCardTitle>{name}</MDBCardTitle>
+              <MDBCardText>{address}</MDBCardText>
+              <div className="flex">
+                <span className="title-font font-medium text-2xl text-gray-900 left text-center py-2">
+                  {charge}&nbsp;Rs/Hr
+                </span>
+                <MDBBtn
+                  href="#"
+                  className="flex ml-auto text-white border-0 py-2 px-4 focus:outline-none hover:#1e88e5 rounded "
+                >
+                  Book
+                </MDBBtn>
+              </div>
+            </MDBCardBody>
           </MDBCard>
-          </MDBCol>
+        </MDBCol>
+        <MDBCol className="my-5 mx-5" style={{ maxWidth: "22rem" }}>
+          <MDBCard>
+            <MDBCardBody>
+              <h4>Price/Hr</h4>
+              <div className="flex">
+                <input
+                  type="number"
+                  placeholder="Amount"
+                  value={charge}
+                  onChange={(e) => setCharge(e.target.value)}
+                ></input>
+                <button
+                  type="submit"
+                  className="btn btn-primary px-2"
+                  onClick={(e) => senddata(e)}
+                >
+                  Update
+                </button>
+              </div>
+              <hr />
+              <div className="center">
+                <h6>
+                  If you want to provide your service then kindly turn on below
+                  switch{" "}
+                </h6>
+                <label>
+                  <span className="text-lg">Availablity</span>
+                  <Switch
+                    onChange={handleChange}
+                    checked={available}
+                    className="react-switch items-right -bottom-2 left-4"
+                  />
+                </label>
+              </div>
+            </MDBCardBody>
+          </MDBCard>
+        </MDBCol>
       </MDBRow>
-
-    
-
-      {/* <div className="mycard">
-        <div className="card auth-card input-field">
-          <h4>Price/Hr</h4>
-          <input
-            type="number"
-            // placeholder="Amount"
-            value={charge}
-            onChange={(e) => setCharge(e.target.value)}
-          ></input>
-          <div>
-            <label>
-              <span>Switch with default style</span>
-              <Switch
-                onChange={handleChange}
-                checked={available}
-                className="react-switch"
-              />
-            </label>
-          </div>
-          <button
-            type="submit"
-            className="btn btn-primary"
-            onClick={(e) => senddata(e)}
-          >
-            Update
-          </button>
-        </div>
-      </div> */}
-      <Footer/>
+      <Footer />
     </>
   );
 };
