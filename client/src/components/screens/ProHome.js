@@ -22,13 +22,15 @@ const ProHome = () => {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
 
-  const handleChange = (nextChecked) => {
-    setAvailable(nextChecked);
+  const handleChange = (checked) => {
+    console.log(checked);
+    setAvailable(checked);
   };
 
   const senddata = (e) => {
     e.preventDefault();
     console.log(charge);
+    console.log(available);
 
     fetch("/updatecharge", {
       method: "post",
@@ -38,7 +40,6 @@ const ProHome = () => {
       },
       body: JSON.stringify({
         charge,
-        available,
       }),
     })
       .then((res) => res.json())
@@ -154,16 +155,18 @@ const ProHome = () => {
               <div className="center">
                 <h6>
                   If you want to provide your service then kindly turn on below
-                  switch{" "}
+                  switch.
                 </h6>
                 <label>
                   <span className="text-lg">Availablity</span>
                   <Switch
-                    onChange={handleChange}
-                    checked={available}
                     className="react-switch items-right -bottom-2 left-4"
+                    checked={available}
+                    onChange={handleChange}
                   />
                 </label>
+
+                
               </div>
             </MDBCardBody>
           </MDBCard>

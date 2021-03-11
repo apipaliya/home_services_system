@@ -109,7 +109,7 @@ const ProfilePro = () => {
                       <img
                         src={data.image}
                         alt="Upload profile pic"
-                        className="rounded-circle img-fluid"
+                        className="rounded-circle img"
                         width="200"
                         height="200"
                       />

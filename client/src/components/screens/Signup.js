@@ -9,6 +9,7 @@ const Signup =() => {
     const [name,setName] = useState("")
     const [email,setEmail] = useState("")
     const [password,setPasword] = useState("")
+    const [mobile,setMobile] = useState("")
     const [state,setState] = useState("")
     const [city,setCity] = useState("")
     
@@ -26,6 +27,7 @@ const Signup =() => {
                 name,
                 email,
                 password,
+                mobile,
                 state,
                 city
             })
@@ -67,6 +69,12 @@ const Signup =() => {
             placeholder="Password"
             value={password}
             onChange={(e)=>setPasword(e.target.value)}
+            />
+            <input
+            type="Number"
+            placeholder="Mobile No."
+            value={mobile}
+            onChange={(e)=>setMobile(e.target.value)}
             />
             <input
             type="text"

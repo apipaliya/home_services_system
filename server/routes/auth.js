@@ -25,7 +25,7 @@ const transporter = nodemailer.createTransport(
 );
 
 router.post("/signup", (req, res) => {
-  const { name, email, password, state, city, address } = req.body;
+  const { name, email, password, state, city, mobile } = req.body;
   if (!email || !password || !name || !state || !city) {
     return res.status(422).json({ error: "please add all the fields" });
   }
@@ -41,6 +41,7 @@ router.post("/signup", (req, res) => {
           name,
           email,
           password: hashedpassword,
+          mobile,
           state,
           city,
         });
@@ -318,7 +319,7 @@ router.post("/updatecharge", requireLogin, (req, res) => {
     {
       $set: {
         charge,
-        available,
+    
       },
     }
   )
@@ -332,6 +333,8 @@ router.post("/updatecharge", requireLogin, (req, res) => {
 
 router.post("/updateAvailable", requireLogin, (req, res) => {
   const { available } = req.body;
+  console.log("----------------");
+  console.log(available);
   const _id = req.userPro._id;
   UserPro.findOneAndUpdate(
     { _id },
@@ -342,6 +345,7 @@ router.post("/updateAvailable", requireLogin, (req, res) => {
     }
   )
     .then((data) => {
+      console.log(data);
       res.json(data);
     })
     .catch((err) => {
