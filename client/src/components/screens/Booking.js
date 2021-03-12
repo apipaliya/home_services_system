@@ -5,19 +5,18 @@ import { MDBContainer, MDBRow, MDBCol, MDBBtn } from "mdbreact";
 import M from "materialize-css";
 import { useHistory } from "react-router-dom";
 
-<<<<<<< HEAD
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Footer from '../Footer';
 import UserNavBar from './UserNavbar'
 import Footer from '../Footer'
-=======
+
 const Booking = () => {
   const history = useHistory();
   const [dateTime, setDateTime] = useState("");
   const [address, setAddress] = useState("");
   const [mobile, setMobile] = useState("");
->>>>>>> d4b0285dc4886a37c7bd51d281b5e0278b40a976
+
 
   const senddata = (e) => {
     e.preventDefault();
