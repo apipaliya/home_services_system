@@ -3,8 +3,10 @@ import Footer from "../Footer";
 import UserNavBar from "./UserNavbar";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from "mdbreact";
 import M from "materialize-css";
+import { useHistory } from "react-router-dom";
 
 const Booking = () => {
+  const history = useHistory();
   const [dateTime, setDateTime] = useState("");
   const [address, setAddress] = useState("");
   const [mobile, setMobile] = useState("");
@@ -34,6 +36,7 @@ const Booking = () => {
             html: "Update Details successfully",
             classes: "#43a047 green darken-1",
           });
+          history.push("/payment");
         }
       })
       .catch((err) => {
@@ -106,6 +109,7 @@ const Booking = () => {
                   type="submit"
                   className="rounded"
                   onClick={(e) => senddata(e)}
+                
                 >
                   Next
                 </MDBBtn>

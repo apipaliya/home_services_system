@@ -26,6 +26,7 @@ import UserElectrician from './components/screens/UserElectrician';
 import Pestcontrol from './components/screens/Pestcontrol';
 import UserPestcontrol from './components/screens/UserPestcontrol';
 import Booking from './components/screens/Booking';
+import Payment from './components/screens/Payment';
 
 export const UserContext = createContext()
 
@@ -105,6 +106,9 @@ const Routing = () => {
       </Route>
       <Route path="/profilepro">
         <ProfilePro />
+      </Route>
+      <Route path="/payment">
+        <Payment />
       </Route>
       <Route exact path="/reset">
         <Reset />
