@@ -12,6 +12,10 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    mobile:{
+        type:Number,
+        required:true
+    },
     state:{
         type:String,
         required:true
@@ -19,11 +23,8 @@ const userSchema = new mongoose.Schema({
     city:{
         type:String,
         required:true
-    },    
-    address:{
-        type:String,
-        default:""
     }
+  
     
 })
 

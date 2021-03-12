@@ -10,6 +10,7 @@ const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../config/keys");
 const requireLogin = require("../middleware/requireLogin");
 const adminrequireLogin = require("../middleware/adminrequireLogin");
+const userrequireLogin = require("../middleware/userrequireLogin");
 
 const nodemailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
@@ -24,8 +25,8 @@ const transporter = nodemailer.createTransport(
 );
 
 router.post("/signup", (req, res) => {
-  const { name, email, password, state, city, address } = req.body;
-  if (!email || !password || !name || !state || !city || !address) {
+  const { name, email, password, state, city, mobile } = req.body;
+  if (!email || !password || !name || !state || !city) {
     return res.status(422).json({ error: "please add all the fields" });
   }
   User.findOne({ email: email })
@@ -40,9 +41,9 @@ router.post("/signup", (req, res) => {
           name,
           email,
           password: hashedpassword,
+          mobile,
           state,
           city,
-          address,
         });
 
         user
@@ -192,17 +193,22 @@ router.post("/loginpro", (req, res) => {
     return res.status(422).json({ error: "please add email or password" });
   }
   UserPro.findOne({ email: email }).then((savedUser) => {
+    console.log(savedUser);
     if (!savedUser) {
       return res.status(422).json({ error: "Invalid Email or password" });
     }
     bcrypt
       .compare(password, savedUser.password)
       .then((doMatch) => {
-        if (doMatch) {
+        console.log(doMatch);
+        if (doMatch && savedUser.valid == 1) {
           //    res.json({message:"successfully signed in"})
           const token = jwt.sign({ _id: savedUser._id }, JWT_SECRET);
-          const { _id, name, email, profession, address } = savedUser;
-          res.json({ token, user: { _id, name, email, profession, address } });
+          const { _id, name, email, profession, address, valid } = savedUser;
+          res.json({
+            token,
+            user: { _id, name, email, profession, address, valid },
+          });
         } else {
           return res.status(422).json({ error: "Invalid Email or password" });
         }
@@ -313,7 +319,7 @@ router.post("/updatecharge", requireLogin, (req, res) => {
     {
       $set: {
         charge,
-        available,
+    
       },
     }
   )
@@ -327,6 +333,8 @@ router.post("/updatecharge", requireLogin, (req, res) => {
 
 router.post("/updateAvailable", requireLogin, (req, res) => {
   const { available } = req.body;
+  console.log("----------------");
+  console.log(available);
   const _id = req.userPro._id;
   UserPro.findOneAndUpdate(
     { _id },
@@ -337,6 +345,7 @@ router.post("/updateAvailable", requireLogin, (req, res) => {
     }
   )
     .then((data) => {
+      console.log(data);
       res.json(data);
     })
     .catch((err) => {

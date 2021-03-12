@@ -1,6 +1,7 @@
-import React, { useState, useEffect, Card } from "react";
+import React, { useState, useEffect, } from "react";
 import NavBar from "../Navbar";
 import Footer from "../Footer";
+
 
 import {
   MDBBtn,
@@ -12,7 +13,9 @@ import {
   MDBCardText,
   MDBCol,
 } from "mdbreact";
+
 const Carpenter = () => {
+
   const [professionals, setProfessionals] = useState([
     {
       name: "",
