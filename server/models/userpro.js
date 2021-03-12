@@ -49,7 +49,7 @@ const userproSchema = new mongoose.Schema({
     },
     available:{
         type:Boolean,
-        default:false
+    
     },
     charge:{
         type:Number,

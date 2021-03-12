@@ -7,9 +7,11 @@ const {MONGOURI} =  require('./config/keys')
 require('./models/user')
 require('./models/userpro')
 require('./models/admin')
+require('./models/booking')
 
 app.use(express.json())
 app.use(require('./routes/auth'))
+app.use(require('./routes/booking'))
 app.use("/email",require('./routes/email'))
 
 mongoose.connect(MONGOURI,{
