@@ -3,19 +3,15 @@ import Footer from "../Footer";
 import UserNavBar from "./UserNavbar";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from "mdbreact";
 import M from "materialize-css";
-
-<<<<<<< HEAD
-import React from 'react'
 import { Link } from 'react-router-dom'
-import Footer from '../Footer';
-import UserNavBar from './UserNavbar'
-import Footer from '../Footer'
-=======
+
+
+
 const Booking = () => {
   const [dateTime, setDateTime] = useState("");
   const [address, setAddress] = useState("");
   const [mobile, setMobile] = useState("");
->>>>>>> d4b0285dc4886a37c7bd51d281b5e0278b40a976
+
 
   const senddata = (e) => {
     e.preventDefault();
@@ -75,11 +71,11 @@ const Booking = () => {
     <>
       <UserNavBar />
 
-      <MDBContainer md="3" className="w-50 card">
+      <MDBContainer md="3" className="w-50 card my-3">
         <MDBRow>
           <MDBCol md="10" className="mx-auto">
             <form>
-              <p className="h4 text-center mb-4 my-10">Address</p>
+              <p className="h4 text-center mb-4 my-10">Contact Info</p>
               <label for="street/area" className="grey-text">
                 Street/Area*
               </label>
@@ -97,7 +93,17 @@ const Booking = () => {
               value={mobile}
               onChange={(e)=> setMobile(e.target.value)}
               />
-              <br/>
+              
+            </form>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
+
+      <MDBContainer md="3" className="w-50 card my-3">
+        <MDBRow>
+          <MDBCol md="10" className="mx-auto">
+            <form>
+              
               <p className="h4 text-center mb-4 my-8">Date & Time</p>
               <label for="birthdaytime">Select Date and Time*</label>
               <input
