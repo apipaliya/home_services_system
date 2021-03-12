@@ -5,11 +5,6 @@ import { MDBContainer, MDBRow, MDBCol, MDBBtn } from "mdbreact";
 import M from "materialize-css";
 import { useHistory } from "react-router-dom";
 
-import React from 'react'
-import { Link } from 'react-router-dom'
-import Footer from '../Footer';
-import UserNavBar from './UserNavbar'
-import Footer from '../Footer'
 
 const Booking = () => {
   const history = useHistory();
