@@ -64,7 +64,7 @@ const UserElectrician = () => {
                       {shop.charge}&nbsp;Rupees/Hr
                     </span>
                     <MDBBtn
-                      href="#"
+                      href="/booking"
                       className="flex ml-auto text-white border-0 py-2 px-4 focus:outline-none hover:#1e88e5 rounded "
                     >
                       Book
