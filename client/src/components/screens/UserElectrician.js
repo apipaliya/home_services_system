@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Card } from "react";
 import UserNavBar from "./UserNavbar";
 import Footer from "../Footer";
+import { useHistory } from "react-router-dom";
 
 import {
   MDBBtn,
@@ -15,6 +16,10 @@ import {
 
 
 const UserElectrician = () => {
+
+ 
+  const history = useHistory();
+  
   const [professionals, setProfessionals] = useState([
     {
       name: "",
@@ -22,8 +27,11 @@ const UserElectrician = () => {
       charge: "",
       profession: "",
       city: "",
+      _id:""
     },
   ]);
+
+ 
 
   useEffect(() => {
     fetch("/electricianPro", {
@@ -40,6 +48,7 @@ const UserElectrician = () => {
         } else {
           console.log(datadetail);
           setProfessionals(datadetail);
+  
         }
       })
       .catch((err) => {
@@ -51,9 +60,11 @@ const UserElectrician = () => {
     <>
       <UserNavBar />
       <MDBRow className="px-0" style={{ backgroundColor: "#f2f2f2" }}>
-        {professionals.map((shop, index) => (
+        {professionals.map((shop, index) => {
+         return(
+           <>
           <div key={index}>
-            <MDBCol className="my-5 mx-5" style={{ maxWidth: "22rem" }}>
+            <MDBCol className="my-4 mb-2 ml-8" style={{ maxWidth: "22rem" }}>
               <MDBCard>
                 <MDBCardImage className="img-fluid" src={shop.image} waves />
                 <MDBCardBody>
@@ -64,8 +75,15 @@ const UserElectrician = () => {
                       {shop.charge}&nbsp;Rupees/Hr
                     </span>
                     <MDBBtn
-                      href="/booking"
+                     
                       className="flex ml-auto text-white border-0 py-2 px-4 focus:outline-none hover:#1e88e5 rounded "
+                      onClick={(e)=>{
+                        var data = {_id:shop._id};
+                        history.push({
+                        pathname: "/booking",
+                        state: { data },
+                      });
+                    }}
                     >
                       Book
                     </MDBBtn>
@@ -74,7 +92,9 @@ const UserElectrician = () => {
               </MDBCard>
             </MDBCol>
           </div>
-        ))}
+          </>
+         )
+})}
       </MDBRow>
       <Footer/>
     </>

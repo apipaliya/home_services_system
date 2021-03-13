@@ -12,6 +12,7 @@ import DoneOutlineIcon from "@material-ui/icons/DoneOutline";
 import IconButton from "@material-ui/core/IconButton";
 import CancelIcon from "@material-ui/icons/Cancel";
 import Footer from "../Footer";
+import { useHistory } from "react-router";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -38,6 +39,8 @@ const useStyles = makeStyles({
 });
 
 const Admin = () => {
+
+  const history = useHistory();
   const classes = useStyles();
 
   const [data, setdata] = useState([
@@ -64,6 +67,7 @@ const Admin = () => {
       .then((datadetail) => {
         if (datadetail.error) {
           console.log(datadetail.error);
+          history.push("/adminLogin")
         } else {
           console.log(datadetail);
           setdata(datadetail);

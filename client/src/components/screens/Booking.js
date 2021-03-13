@@ -1,17 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, } from "react";
 import Footer from "../Footer";
 import UserNavBar from "./UserNavbar";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from "mdbreact";
 import M from "materialize-css";
 import { useHistory } from "react-router-dom";
+import {useLocation} from "react-router-dom";
 
 
 const Booking = () => {
   const history = useHistory();
+  const location = useLocation();
   const [dateTime, setDateTime] = useState("");
   const [address, setAddress] = useState("");
   const [mobile, setMobile] = useState("");
 
+  const [professionalsid, setProfessionalsid] = useState("");
+
+  useEffect((req,res) => {
+    var d1 = location.state.data;
+
+    console.log("d1",d1._id);
+    setProfessionalsid(d1._id);
+     
+  }, [location]);
 
   const senddata = (e) => {
     e.preventDefault();
@@ -27,6 +38,7 @@ const Booking = () => {
       body: JSON.stringify({
         dateTime,
         address,
+        professionalsid
       }),
     })
       .then((res) => res.json())
@@ -72,11 +84,12 @@ const Booking = () => {
     <>
       <UserNavBar />
 
-      <MDBContainer md="3" className="w-50 card">
+      <MDBContainer md="3" className="w-50 card my-3">
         <MDBRow>
+          
           <MDBCol md="10" className="mx-auto">
             <form>
-              <p className="h4 text-center mb-4 my-10">Address</p>
+              <p className="h4 text-center mb-4 my-10">Contact Info</p>
               <label for="street/area" className="grey-text">
                 Street/Area*
               </label>
@@ -94,7 +107,17 @@ const Booking = () => {
               value={mobile}
               onChange={(e)=> setMobile(e.target.value)}
               />
-              <br/>
+              
+            </form>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
+
+      <MDBContainer md="3" className="w-50 card my-3">
+        <MDBRow>
+          <MDBCol md="10" className="mx-auto">
+            <form>
+              
               <p className="h4 text-center mb-4 my-8">Date & Time</p>
               <label for="birthdaytime">Select Date and Time*</label>
               <input
@@ -111,7 +134,6 @@ const Booking = () => {
                   type="submit"
                   className="rounded"
                   onClick={(e) => senddata(e)}
-                
                 >
                   Next
                 </MDBBtn>

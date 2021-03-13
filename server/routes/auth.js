@@ -404,6 +404,9 @@ router.get("/electricianPro", (req, res) => {
 });
 
 router.get("/verifyProfessional", adminrequireLogin, (req, res) => {
+  if(!req.admin){
+    return res.status(422).json({error:"required login"});
+  }
   UserPro.find({ valid: 0 })
     .then((userpros) => {
       res.json(userpros);
@@ -464,5 +467,28 @@ router.post("/new-password", (req, res) => {
       console.log(err);
     });
 });
+
+
+// Booking.find({ influencerid, shoprequest: 1 })
+//     .then(async (data) => {
+//       for (i = 0, len = data.length; i < len; i++) {
+//         var sid = data[i].shopid;
+//         await Shop.findById(sid)
+          
+//           .then((data1) => {
+//             data1["_id"] = data[i]._id;
+//             array.push(data1);
+//             array1.push(data[i].Amount);
+//           });
+//       }
+//       var arr = [];
+//       // array1=[2,3];
+//       arr.push(array);
+//       arr.push(array1);
+//       res.json(arr);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
 
 module.exports = router;

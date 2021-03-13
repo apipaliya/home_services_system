@@ -19,7 +19,7 @@ const { SENDGRID_API, EMAIL } = require("../config/keys");
 
 
 router.post('/createBooking',userrequireLogin,(req,res)=>{
-    const {dateTime,address} = req.body 
+    const {dateTime,address, professionalsid} = req.body 
     if(!dateTime ||  !address){
       return  res.status(422).json({error:"Plase add all the fields"})
     }
@@ -27,7 +27,8 @@ router.post('/createBooking',userrequireLogin,(req,res)=>{
     const post = new Booking({
         dateTime,
         address,
-        bookedBy:req.user
+        bookedBy:req.user,
+        provider: professionalsid
     })
     post.save().then(result=>{
         console.log(result);

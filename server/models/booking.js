@@ -1,17 +1,27 @@
 const mongoose = require('mongoose')
 const {ObjectId} = mongoose.Schema.Types
+
+
 const bookingSchema = new mongoose.Schema({
     dateTime:{
         type:String,
-        required:true
+        default:""
     },
     address:{
         type:String,
-        required:true
+        default:""
     },
     bookedBy:{
         type:ObjectId,
         ref:"User"
+    },
+    provider:{
+        type:ObjectId,
+        ref:"UserPro"
+    },
+    paymentStatus:{
+        type:Number,
+        default:0
     }
        
 })
