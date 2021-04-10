@@ -1,291 +1,162 @@
-const express = require("express");
-const router = express.Router();
-const mongoose = require("mongoose");
-const User = mongoose.model("User");
-const UserPro = mongoose.model("UserPro");
-const Admin = mongoose.model("Admin");
-const Booking = mongoose.model("Booking");
-const crypto = require("crypto");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const { JWT_SECRET } = require("../config/keys");
-const requireLogin = require("../middleware/requireLogin");
-const adminrequireLogin = require("../middleware/adminrequireLogin");
-const userrequireLogin = require("../middleware/userrequireLogin");
+import React, { useState, useEffect, } from "react";
+import Footer from "../Footer";
+import UserNavBar from "./UserNavbar";
+import { MDBContainer, MDBRow, MDBCol, MDBBtn } from "mdbreact";
+import M from "materialize-css";
+import { useHistory } from "react-router-dom";
+import {useLocation} from "react-router-dom";
 
-const nodemailer = require("nodemailer");
-const sendgridTransport = require("nodemailer-sendgrid-transport");
-const { SENDGRID_API, EMAIL } = require("../config/keys");
+const Booking = () => {
+  const history = useHistory();
+  const location = useLocation();
+  const [dateTime, setDateTime] = useState("");
+  const [address, setAddress] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [zipcode, setZipcode] = useState("");
 
-router.post("/createBooking", userrequireLogin, (req, res) => {
-  const { dateTime, address, zipcode, professionalsid } = req.body;
-  if (!dateTime || !address || !zipcode) {
-    return res.status(422).json({ error: "Plase add all the fields" });
-  }
-  req.user.password = undefined;
-  const post = new Booking({
-    dateTime,
-    address,
-    zipcode,
-    bookedBy: req.user,
-    provider: professionalsid,
-  });
-  post
-    .save()
-    .then((result) => {
-      console.log(result);
-      res.json({ post: result });
+  const [professionalsid, setProfessionalsid] = useState("");
+
+  useEffect((req,res) => {
+    var d1 = location.state.data;
+
+    console.log("d1",d1._id);
+    setProfessionalsid(d1._id);
+     
+  }, [location]);
+
+  const senddata = (e) => {
+    e.preventDefault();
+    console.log(dateTime);
+    console.log(address);
+
+    fetch("/createBooking", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+      body: JSON.stringify({
+        dateTime,
+        address,
+        zipcode,
+        professionalsid
+      }),
     })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          console.log(data.error);
+        } else {
+          M.toast({
+            html: "Update Details successfully",
+            classes: "#43a047 green darken-1",
+          });
+          history.push("/payment");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-router.get("/userData", userrequireLogin, (req, res) => {
-  var arr1 = [];
-  var _id = req.user._id;
-  User.findById(_id)
-    .then((users) => {
-      console.log(users);
-      arr1.push(users.mobile);
-      res.json(arr1);
+  useEffect(() => {
+    fetch("/userData", {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
     })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+      .then((res) => res.json())
+      .then((datadetail) => {
+        if (datadetail.error) {
+          console.log(datadetail.error);
+        } else {
+          console.log(datadetail);
+          setMobile(datadetail[0]);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
-router.get("/verifywork", requireLogin, (req, res) => {
-  var provider = req.userPro._id;
-  console.log(provider);
-  var array = [];
-  var array1 = [];
-  var array2 = [];
-  Booking.find({ provider, confirm:0 })
-    .then(async (data) => {
-      console.log(data);
-      for (i = 0, len = data.length; i < len; i++) {
-        var d1 = {
-          _id: data[i]._id,
-          dateTime: data[i].dateTime,
-          address: data[i].address,
-          zipcode: data[i].zipcode,
-        };
-        array1.push(d1);
-        var sid = data[i].bookedBy;
-        var data1 = await User.findById(sid).exec();
-        array.push(data1);
-      }
+  return (
+    <>
+      <UserNavBar />
 
-      array2.push(array);
-      array2.push(array1);
-      res.json(array2);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+      <MDBContainer md="3" className="w-50 card my-3">
+        <MDBRow>
+          
+          <MDBCol md="10" className="mx-auto">
+            <form>
+              <p className="h4 text-center mb-4 my-10">Appointment</p>
+              <label for="street/area" className="grey-text">
+                Street/Area*
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+              />
+              <br />
+              <label for="street/area" className="grey-text">
+                ZipCode
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                value={zipcode}
+                onChange={(e) => setZipcode(e.target.value)}
+              />
+              <br />
+              <label for="phone" className="grey-text">
+                Mobile No.*
+              </label>
+              <input type="text" className="form-control"
+              value={mobile}
+              onChange={(e)=> setMobile(e.target.value)}
+              />
+              
+            </form>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
 
-router.get("/verifyworkDone", requireLogin, (req, res) => {
-  var provider = req.userPro._id;
-  console.log(provider);
-  var array = [];
-  var array1 = [];
-  var array2 = [];
-  Booking.find({ provider,confirm:1,paymentStatus:0,visit:0 })
-    .then(async (data) => {
-      console.log(data);
-      for (i = 0, len = data.length; i < len; i++) {
-        var d1 = {
-          _id: data[i]._id,
-          dateTime: data[i].dateTime,
-          address: data[i].address,
-          zipcode: data[i].zipcode,
-        };
-        array1.push(d1);
-        var sid = data[i].bookedBy;
-        var data1 = await User.findById(sid).exec();
-        array.push(data1);
-      }
+      <MDBContainer md="3" className="w-50 card my-3">
+        <MDBRow>
+          <MDBCol md="10" className="mx-auto">
+            <form>
+              
+              <p className="h4 text-center mb-4 my-8">Date & Time</p>
+              <label for="birthdaytime">Select Date and Time*</label>
+              <input
+                type="datetime-local"
+                id="daytime"
+                name="daytime"
+                value={dateTime}
+                onChange={(e) => setDateTime(e.target.value)}
+              ></input>
 
-      array2.push(array);
-      array2.push(array1);
-      res.json(array2);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+              <div className="text-center mt-4">
+                <MDBBtn
+                  color="blue-grey"
+                  type="submit"
+                  className="rounded"
+                  onClick={(e) => senddata(e)}
+                >
+                  Next
+                </MDBBtn>
+              </div>
+            </form>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
 
-router.get("/workDone", requireLogin, (req, res) => {
-  var provider = req.userPro._id;
-  console.log(provider);
-  var array = [];
-  var array1 = [];
-  var array2 = [];
-  Booking.find({ provider, paymentStatus: 1, visit: 1 })
-    .then(async (data) => {
-      console.log(data);
-      for (i = 0, len = data.length; i < len; i++) {
-        var d1 = {
-          _id: data[i]._id,
-          dateTime: data[i].dateTime,
-          address: data[i].address,
-          zipcode: data[i].zipcode,
-          payamount:data[i].payamount,
-          description:data[i].description
-        };
-        array1.push(d1);
-        var sid = data[i].bookedBy;
-        var data1 = await User.findById(sid).exec();
-        array.push(data1);
-      }
+      <Footer />
+    </>
+  );
+};
 
-      array2.push(array);
-      array2.push(array1);
-      res.json(array2);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
-
-router.post("/confirmBooking", requireLogin, (req, res) => {
-  const { _id } = req.body;
-  console.log(_id);
-  Booking.findOneAndUpdate(
-    { _id },
-    { $set: { confirm: 1 } },
-    { new: true },
-    (err, doc) => {
-      if (err) {
-        console.log("Something wrong when updating data!");
-      } else {
-        res.status(200).json(doc);
-      }
-    }
-  )
-    .then((inf) => {
-      // console.log(inf);
-    })
-    .catch((err) => console.log(err));
-});
-
-router.post("/denyBooking", userrequireLogin, (req, res) => {
-  const { _id } = req.body;
-  console.log(_id);
-  Booking.findOneAndDelete({ _id }, (err, doc) => {
-    if (err) {
-      console.log("Something wrong when updating data!");
-    } else {
-      res.status(200).json(doc);
-    }
-  })
-    .then((inf) => {
-      // console.log(inf);
-    })
-    .catch((err) => console.log(err));
-});
-
-router.get("/userworkDone", userrequireLogin, (req, res) => {
-  console.log("userworkDone");
-  var bookedBy = req.user._id;
-  var array = [];
-  var array1 = [];
-  var array2 = [];
-  Booking.find({ bookedBy, paymentStatus: 0, visit: 0,confirm:1 })
-    .then(async (data) => {
-      for (i = 0, len = data.length; i < len; i++) {
-        var d1 = {
-          _id: data[i]._id,
-          dateTime: data[i].dateTime,
-          address: data[i].address,
-        };
-        array1.push(d1);
-        var sid = data[i].provider;
-        var data1 = await UserPro.findById(sid).exec();
-        array.push(data1);
-      }
-      array2.push(array);
-      array2.push(array1);
-      res.json(array2);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
-
-router.post("/workSuccess", userrequireLogin, (req, res) => {
-  const { _id,payamount,description } = req.body;
-  Booking.findOneAndUpdate(
-    { _id },
-    { $set: { visit: 1 ,payamount,description,paymentStatus:1} },
-    { new: true },
-    (err, doc) => {
-      if (err) {
-        console.log("Something wrong when updating data!");
-      } else {
-        res.status(200).json(doc);
-      }
-    }
-  )
-    .then((inf) => {
-      // console.log(inf);
-    })
-    .catch((err) => console.log(err));
-});
-
-router.post("/bookingCancel", userrequireLogin, (req, res) => {
-  const { _id } = req.body;
-  console.log(_id);
-  Booking.findOneAndDelete({ _id }, (err, doc) => {
-    if (err) {
-      console.log("Something wrong when updating data!");
-    } else {
-      res.status(200).json(doc);
-    }
-  })
-    .then((inf) => {
-      // console.log(inf);
-    })
-    .catch((err) => console.log(err));
-});
-
-router.post("/feedbackData", userrequireLogin, async (req, res) => {
-  console.log("feedback");
-  let { rating, review, professionalsid } = req.body;
-  console.log(professionalsid);
-  console.log(review);
-  console.log(rating);
-  if (!rating || !review) {
-    return res.status(422).json({ error: "Plase add all the fields" });
-  }
-
-try{let userPro = await UserPro.findById(professionalsid);
-  // console.log(userPro);
-  rating =
-    (userPro.rating * userPro.review.length + rating) /
-    (userPro.review.length + 1);
-  review = [...userPro.review, review];}
-  catch (err) {
-    console.log(err);
-  }
-  UserPro.findOneAndUpdate(
-    { _id: professionalsid },
-    { $set: { review, rating } },
-    { new: true },
-    (err, doc) => {
-      if (err) {
-        console.log("Something wrong when updating data!");
-      } else {
-        res.status(200).json(doc);
-      }
-    }
-  )
-    .then((inf) => {
-      console.log(inf);
-    })
-    .catch((err) => console.log(err));
-});
-
-module.exports = router;
+export default Booking;
