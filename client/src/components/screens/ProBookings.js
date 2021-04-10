@@ -41,8 +41,6 @@ const useStyles = makeStyles({
 const ProBookings = () => {
   const history = useHistory();
   const classes = useStyles();
-  // const [name,setName] = useState(localStorage.getItem("user"));
-  // const name = localStorage.getItem("user")
   const storedData = JSON.parse(localStorage.getItem("user"));
 
   const [data, setdata] = useState([

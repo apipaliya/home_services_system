@@ -1,7 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const crypto = require("crypto");
-
 const nodemailer = require("nodemailer");
 const { Router } = require("express");
 
@@ -18,9 +16,7 @@ router.post("/add", function (req, res) {
     from: "helpinghandsmongo@gmail.com",
     to: `${req.body.email}`,
     subject: "Account verification",
-    html:
-      `<h4>Congratulations, Your Account is verified by Helping Hands At Home. Now you can use our system.</h4>`
-      
+    html: `<h4>Congratulations, Your Account is verified by Helping Hands At Home. Now you can use our system.</h4>`,
   };
   transporter.sendMail(mailOptions, function (err, res) {
     if (err) {
@@ -55,8 +51,7 @@ router.post("/visit", function (req, res) {
     from: "helpinghandsmongo@gmail.com",
     to: `${req.body.email}`,
     subject: "Service Completed",
-    html:
-      `<h4>Congratulations, Your ${req.body.profession} Serivce is completed by ${req.body.name} Helping Hands At Home.</h4>`
+    html: `<h4>Congratulations, Your ${req.body.profession} Serivce is completed by ${req.body.name} Helping Hands At Home.</h4>`,
   };
   transporter.sendMail(mailOptions, function (err, res) {
     if (err) {
@@ -73,8 +68,7 @@ router.post("/confirm", function (req, res) {
     from: "helpinghandsmongo@gmail.com",
     to: `${req.body.email}`,
     subject: "Service Confirmation",
-    html:
-      `<h4>Congratulations, Your Serivce is confirm by our ${req.body.name}</h4>`
+    html: `<h4>Congratulations, Your Serivce is confirm by our ${req.body.name}</h4>`,
   };
   transporter.sendMail(mailOptions, function (err, res) {
     if (err) {
@@ -91,8 +85,24 @@ router.post("/deny", function (req, res) {
     from: "helpinghandsmongo@gmail.com",
     to: `${req.body.email}`,
     subject: "Service Confirmation",
-    html:
-      `<h4> Your Serivce is denied by our ${req.body.name} professional</h4>`
+    html: `<h4> Your Serivce is denied by our ${req.body.name} professional</h4>`,
+  };
+  transporter.sendMail(mailOptions, function (err, res) {
+    if (err) {
+      console.error("there was an error: ", err);
+    } else {
+      console.log("here is the res: ", res);
+    }
+  });
+  res.json("mail send successfully");
+});
+
+router.post("/complete", function (req, res) {
+  const mailOptions = {
+    from: "helpinghandsmongo@gmail.com",
+    to: `${req.body.email}`,
+    subject: "Service Complete",
+    html: `<h4>Congratulations, Your Serivce is completed by our ${req.body.name}</h4>`,
   };
   transporter.sendMail(mailOptions, function (err, res) {
     if (err) {

@@ -1,7 +1,7 @@
 import React,{useState,useContext,} from 'react'
 import {Link,useHistory} from 'react-router-dom'
 import M from 'materialize-css'
-const Reset  = ()=>{
+const ProReset  = ()=>{
     const history = useHistory()
     const [email,setEmail] = useState("")
     const PostData = ()=>{
@@ -9,7 +9,7 @@ const Reset  = ()=>{
             M.toast({html: "invalid email",classes:"#c62828 red darken-3"})
             return
         }
-        fetch('/reset-password',{
+        fetch('/userpro/reset-password',{
             method:"post",
             headers:{
                 "Content-Type":"application/json"
@@ -33,7 +33,7 @@ const Reset  = ()=>{
    return (
       <div className="mycard">
           <div className="card auth-card input-field">
-            <h2>Instagram</h2>
+            <h2>Helping Hands At Home</h2>
             <input
             type="text"
             placeholder="email"
@@ -53,4 +53,4 @@ const Reset  = ()=>{
 }
 
 
-export default Reset
+export default ProReset

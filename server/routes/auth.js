@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const User = mongoose.model("User");
 const UserPro = mongoose.model("UserPro");
 const Admin = mongoose.model("Admin");
-const ContactUs = mongoose.model("ContactUs");  
+const ContactUs = mongoose.model("ContactUs");
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -12,18 +12,16 @@ const { JWT_SECRET } = require("../config/keys");
 const requireLogin = require("../middleware/requireLogin");
 const adminrequireLogin = require("../middleware/adminrequireLogin");
 const userrequireLogin = require("../middleware/userrequireLogin");
-
 const nodemailer = require("nodemailer");
-const sendgridTransport = require("nodemailer-sendgrid-transport");
-const { SENDGRID_API, EMAIL } = require("../config/keys");
+const { Router } = require("express");
 
-const transporter = nodemailer.createTransport(
-  sendgridTransport({
-    auth: {
-      api_key: SENDGRID_API,
-    },
-  })
-);
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "helpinghandsmongo@gmail.com",
+    pass: "Helping@hands",
+  },
+});
 
 router.post("/signup", (req, res) => {
   const { name, email, password, state, city, mobile } = req.body;
@@ -320,7 +318,6 @@ router.post("/updatecharge", requireLogin, (req, res) => {
     {
       $set: {
         charge,
-    
       },
     }
   )
@@ -364,7 +361,10 @@ router.get("/professionals", requireLogin, (req, res) => {
     });
 });
 
-router.get("/carpenterPro", (req, res) => {
+router.get("/carpenterPro", userrequireLogin, (req, res) => {
+  if (!req.user) {
+    return res.status(422).json({ error: "required login" });
+  }
   UserPro.find({ available: true, valid: 1, profession: "Carpenter" })
     .then((userpros) => {
       res.json(userpros);
@@ -374,7 +374,10 @@ router.get("/carpenterPro", (req, res) => {
     });
 });
 
-router.get("/pestcontrolPro", (req, res) => {
+router.get("/pestcontrolPro", userrequireLogin, (req, res) => {
+  if (!req.user) {
+    return res.status(422).json({ error: "required login" });
+  }
   UserPro.find({ available: true, valid: 1, profession: "Pest Control" })
     .then((userpros) => {
       res.json(userpros);
@@ -384,7 +387,10 @@ router.get("/pestcontrolPro", (req, res) => {
     });
 });
 
-router.get("/plumberPro", (req, res) => {
+router.get("/plumberPro", userrequireLogin, (req, res) => {
+  if (!req.user) {
+    return res.status(422).json({ error: "required login" });
+  }
   UserPro.find({ available: true, valid: 1, profession: "Plumber" })
     .then((userpros) => {
       res.json(userpros);
@@ -394,7 +400,10 @@ router.get("/plumberPro", (req, res) => {
     });
 });
 
-router.get("/electricianPro", (req, res) => {
+router.get("/electricianPro", userrequireLogin, (req, res) => {
+  if (!req.user) {
+    return res.status(422).json({ error: "required login" });
+  }
   UserPro.find({ available: true, valid: 1, profession: "Electrician" })
     .then((userpros) => {
       res.json(userpros);
@@ -405,8 +414,8 @@ router.get("/electricianPro", (req, res) => {
 });
 
 router.get("/verifyProfessional", adminrequireLogin, (req, res) => {
-  if(!req.admin){
-    return res.status(422).json({error:"required login"});
+  if (!req.admin) {
+    return res.status(422).json({ error: "required login" });
   }
   UserPro.find({ valid: 0 })
     .then((userpros) => {
@@ -417,7 +426,7 @@ router.get("/verifyProfessional", adminrequireLogin, (req, res) => {
     });
 });
 
-router.post("/reset-password", (req, res) => {
+router.post("/user/reset-password", (req, res) => {
   crypto.randomBytes(32, (err, buffer) => {
     if (err) {
       console.log(err);
@@ -432,22 +441,30 @@ router.post("/reset-password", (req, res) => {
       user.resetToken = token;
       user.expireToken = Date.now() + 3600000;
       user.save().then((result) => {
-        transporter.sendMail({
-          to: user.email,
-          from: "no-replay@insta.com",
+        const mailOptions = {
+          from: "helpinghandsmongo@gmail.com",
+          to: `${req.body.email}`,
           subject: "password reset",
           html: `
                     <p>You requested for password reset</p>
-                    <h5>click in this <a href="${EMAIL}/reset/${token}">link</a> to reset password</h5>
+                    <h5>click in this <a href="http://localhost:3000/user/reset/${token}">link</a> to reset password</h5>
                     `,
+        };
+        transporter.sendMail(mailOptions, function (err, res) {
+          if (err) {
+            console.error("there was an error: ", err);
+          } else {
+            console.log("here is the res: ", res);
+          }
         });
+        res.json("mail send successfully");
         res.json({ message: "check your email" });
       });
     });
   });
 });
 
-router.post("/new-password", (req, res) => {
+router.post("/user/new-password", (req, res) => {
   const newPassword = req.body.password;
   const sentToken = req.body.token;
   User.findOne({ resetToken: sentToken, expireToken: { $gt: Date.now() } })
@@ -469,10 +486,70 @@ router.post("/new-password", (req, res) => {
     });
 });
 
+router.post("/userpro/reset-password", (req, res) => {
+  crypto.randomBytes(32, (err, buffer) => {
+    if (err) {
+      console.log(err);
+    }
+    const token = buffer.toString("hex");
+    UserPro.findOne({ email: req.body.email }).then((user) => {
+      if (!user) {
+        return res
+          .status(422)
+          .json({ error: "User don't exists with that email" });
+      }
+      user.resetToken = token;
+      user.expireToken = Date.now() + 3600000;
+      user.save().then((result) => {
+        const mailOptions = {
+          from: "helpinghandsmongo@gmail.com",
+          to: `${req.body.email}`,
+          subject: "password reset",
+          html: `
+                    <p>You requested for password reset</p>
+                    <h5>click in this <a href="http://localhost:3000/userpro/reset/${token}">link</a> to reset password</h5>
+                    `,
+        };
+        transporter.sendMail(mailOptions, function (err, res) {
+          if (err) {
+            console.error("there was an error: ", err);
+          } else {
+            console.log("here is the res: ", res);
+          }
+        });
+        res.json("mail send successfully");
+        res.json({ message: "check your email" });
+      });
+    });
+  });
+});
+
+router.post("/userpro/new-password", (req, res) => {
+  const newPassword = req.body.password;
+  const sentToken = req.body.token;
+  UserPro.findOne({ resetToken: sentToken, expireToken: { $gt: Date.now() } })
+    .then((userPro) => {
+      if (!userPro) {
+        return res.status(422).json({ error: "Try again session expired" });
+      }
+      bcrypt.hash(newPassword, 12).then((hashedpassword) => {
+        userPro.password = hashedpassword;
+        userPro.resetToken = undefined;
+        userPro.expireToken = undefined;
+        userPro.save().then((saveduser) => {
+          res.json({ message: "password updated success" });
+        });
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 
 router.post("/contactDone", adminrequireLogin, (req, res) => {
   const { email } = req.body;
   console.log(email);
+
   ContactUs.findOneAndUpdate(
     { email },
     { $set: { done: 1 } },
@@ -492,8 +569,8 @@ router.post("/contactDone", adminrequireLogin, (req, res) => {
 });
 
 router.get("/contactRemaining", adminrequireLogin, (req, res) => {
-  if(!req.admin){
-    return res.status(422).json({error:"required login"});
+  if (!req.admin) {
+    return res.status(422).json({ error: "required login" });
   }
   ContactUs.find({ done: 0 })
     .then((userpros) => {
@@ -505,17 +582,16 @@ router.get("/contactRemaining", adminrequireLogin, (req, res) => {
 });
 
 router.post("/contactusdata", (req, res) => {
-  const { name,email,subject,text } = req.body;
+  const { name, email, subject, text } = req.body;
   if (!name || !email || !subject || !text) {
     return res.status(422).json({ error: "Plase add all the fields" });
   }
- 
+
   const post = new ContactUs({
     name,
     email,
     subject,
-    text
-    
+    text,
   });
   post
     .save()

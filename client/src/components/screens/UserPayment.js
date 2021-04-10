@@ -56,7 +56,7 @@ const UserPayment = () => {
 
     const options = {
       key: "",
-      name: "HHAH",
+      name: "Helping Hands At Home",
       description: d1.bookingid,
       order_id: data.id,
       handler: async (response) => {

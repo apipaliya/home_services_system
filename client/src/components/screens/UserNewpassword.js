@@ -1,13 +1,13 @@
 import React,{useState,useContext,} from 'react'
 import {Link,useHistory,useParams} from 'react-router-dom'
 import M from 'materialize-css'
-const SignIn  = ()=>{
+const UserNewpassword  = ()=>{
     const history = useHistory()
     const [password,setPasword] = useState("")
     const {token} = useParams()
     console.log(token)
     const PostData = ()=>{
-        fetch("/new-password",{
+        fetch("/user/new-password",{
             method:"post",
             headers:{
                 "Content-Type":"application/json"
@@ -25,7 +25,7 @@ const SignIn  = ()=>{
            else{
 
                M.toast({html:data.message,classes:"#43a047 green darken-1"})
-               history.push('/signin')
+               history.push('/login')
            }
         }).catch(err=>{
             console.log(err)
@@ -34,7 +34,7 @@ const SignIn  = ()=>{
    return (
       <div className="mycard">
           <div className="card auth-card input-field">
-            <h2>Instagram</h2>
+            <h2>Helping Hands At Home</h2>
         
             <input
             type="password"
@@ -54,4 +54,4 @@ const SignIn  = ()=>{
 }
 
 
-export default SignIn
+export default UserNewpassword

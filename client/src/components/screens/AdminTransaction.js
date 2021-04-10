@@ -8,12 +8,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Badge from "react-bootstrap/Badge";
-import DoneOutlineIcon from "@material-ui/icons/DoneOutline";
-import IconButton from "@material-ui/core/IconButton";
-import Button from "@material-ui/core/Button";
-import CancelIcon from "@material-ui/icons/Cancel";
+import AdminNavbar from "./AdminNavbar";
 import { useHistory } from "react-router";
-import UserNavBar from "./UserNavbar";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -39,35 +35,30 @@ const useStyles = makeStyles({
   },
 });
 
-const UserHistory = () => {
+const AdminTransaction = () => {
   const history = useHistory();
   const classes = useStyles();
 
-  const [data, setdata] = useState([
-    {
-      // professional
-      name: "",
-      mobile: "",
-      profession: "",
-      city: "",
-      _id: "",
-    },
-  ]);
   const [data1, setdata1] = useState([
     {
-      address: "",
-      dateTime: "",
-      zipcode: "",
-      payamount: "",
+      paymentid: "",
+      Amount: "",
+      paymentstatus: "",
+      order_id: "",
+      bookingid: "",
+      date: "",
+      senderemail: "",
+      receiveremail: "",
+    },
+  ]);
+  const [data, setdata] = useState([
+    {
       description: "",
-      paymentStatus: "",
-      provider: "",
-      _id: "",
     },
   ]);
 
   useEffect(() => {
-    fetch("/userworkDone", {
+    fetch("/transaction", {
       method: "get",
       headers: {
         "Content-Type": "application/json",
@@ -78,7 +69,7 @@ const UserHistory = () => {
       .then((datadetail) => {
         if (datadetail.error) {
           console.log(datadetail.error);
-          history.push("/login");
+          history.push("/adminLogin");
         } else {
           setdata(datadetail[0]);
           setdata1(datadetail[1]);
@@ -91,7 +82,7 @@ const UserHistory = () => {
 
   return (
     <>
-      <UserNavBar />
+      <AdminNavbar />
 
       <br />
       <div className="content">
@@ -108,7 +99,7 @@ const UserHistory = () => {
                     fontFamily: "Roboto !important",
                   }}
                 >
-                  <p className="m-auto text-center">Completed Appointments</p>
+                  <p className="m-auto text-center">Transaction</p>
                 </div>
               </div>
               <div className="card">
@@ -119,17 +110,19 @@ const UserHistory = () => {
                   >
                     <TableHead>
                       <TableRow>
-                        <StyledTableCell>Name</StyledTableCell>
+                        <StyledTableCell>Payment Id</StyledTableCell>
                         <StyledTableCell align="right">
-                          Profession
+                          User Email
                         </StyledTableCell>
                         <StyledTableCell align="right">
-                          Mobile No.
+                          Professionals Email
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          Booking Id
                         </StyledTableCell>
                         <StyledTableCell align="right">
                           Date & Time
                         </StyledTableCell>
-                        <StyledTableCell align="right">Address</StyledTableCell>
                         <StyledTableCell align="right">Amount</StyledTableCell>
                         <StyledTableCell align="right">
                           Description
@@ -144,34 +137,36 @@ const UserHistory = () => {
                         <StyledTableRow key={index}>
                           {data.length !== 0 && (
                             <StyledTableCell component="th" scope="row">
-                              {data[index].name}
+                              {data[index].paymentid}
                             </StyledTableCell>
                           )}
                           {data.length !== 0 && (
                             <StyledTableCell align="right">
-                              {data[index].profession}
+                              {data[index].senderemail}
                             </StyledTableCell>
                           )}
                           {data.length !== 0 && (
                             <StyledTableCell align="right">
-                              {data[index].mobile}
+                              {data[index].receiveremail}
+                            </StyledTableCell>
+                          )}
+                          {data.length !== 0 && (
+                            <StyledTableCell align="right">
+                              {data[index].bookingid}
                             </StyledTableCell>
                           )}
                           <StyledTableCell align="right">
-                            {data1.dateTime}
+                            {data[index].date}
                           </StyledTableCell>
                           <StyledTableCell align="right">
-                            {data1.address}
-                          </StyledTableCell>
-                          <StyledTableCell align="right">
-                            {data1.payamount}
+                            {data[index].Amount}
                           </StyledTableCell>
                           <StyledTableCell align="right">
                             {data1.description}
                           </StyledTableCell>
 
                           <StyledTableCell align="center">
-                            {data1.paymentStatus ? (
+                            {data[index].paymentstatus ? (
                               <h5>
                                 <Badge variant="success">Success</Badge>{" "}
                               </h5>
@@ -195,4 +190,4 @@ const UserHistory = () => {
   );
 };
 
-export default UserHistory;
+export default AdminTransaction;

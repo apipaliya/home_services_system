@@ -9,18 +9,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import ProNavBar from "./ProNavbar";
-import TextField from "@material-ui/core/TextField";
-import FilledInput from "@material-ui/core/FilledInput";
-import FormControl from "@material-ui/core/FormControl";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
 
-import DoneOutlineIcon from "@material-ui/icons/DoneOutline";
-import IconButton from "@material-ui/core/IconButton";
-import CancelIcon from "@material-ui/icons/Cancel";
-import Footer from "../Footer";
 import { useHistory } from "react-router";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContentText from "@material-ui/core/DialogContentText";
@@ -87,7 +76,7 @@ const ProHistory = () => {
   const handleToClose = () => {
     setOpen(false);
   };
-  
+
   const [data, setdata] = useState([
     {
       // user
@@ -138,80 +127,124 @@ const ProHistory = () => {
       <ProNavBar />
 
       <br />
-      <p className="h4 text-center blue-text">Work Done</p>
-      <br />
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell>Customer Name</StyledTableCell>
-              <StyledTableCell align="right">Mobile No.</StyledTableCell>
-              <StyledTableCell align="right">Date & Time</StyledTableCell>
-              <StyledTableCell align="right">Address</StyledTableCell>
-              <StyledTableCell align="right">ZipCode</StyledTableCell>
-              <StyledTableCell align="right">City</StyledTableCell>
-              <StyledTableCell align="center">Payment</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data1.map((data1, index) => (
-              <StyledTableRow key={index}>
-                {data.length !== 0 && (
-                  <StyledTableCell component="th" scope="row">
-                    {data[index].name}
-                  </StyledTableCell>
-                )}
-                {data.length !== 0 && (
-                  <StyledTableCell align="right">
-                    {data[index].mobile}
-                  </StyledTableCell>
-                )}
-                <StyledTableCell align="right">
-                  {data1.dateTime}
-                </StyledTableCell>
-                <StyledTableCell align="right">{data1.address}</StyledTableCell>
-                <StyledTableCell align="right">{data1.zipcode}</StyledTableCell>
-                {data.length !== 0 && (
-                  <StyledTableCell align="right">
-                    {data[index].city}
-                  </StyledTableCell>
-                )}
-              
-                {data.length !== 0 && (
-                  <StyledTableCell align="center">
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleClickToOpen}
-                    >
-                      View
-                    </Button>
-                  </StyledTableCell>
-                )}
+      <div className="content">
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="card">
+                <div
+                  class="h4 card-header"
+                  style={{
+                    backgroundColor: "#2196f3",
+                    color: "white",
+                    borderRadius: "0.50rem",
+                    fontFamily: "Roboto !important",
+                  }}
+                >
+                  <p className="m-auto text-center">Work Done</p>
+                </div>
+              </div>
+              <div className="card">
+                <TableContainer component={Paper}>
+                  <Table
+                    className={classes.table}
+                    aria-label="customized table"
+                  >
+                    <TableHead>
+                      <TableRow>
+                        <StyledTableCell>Customer Name</StyledTableCell>
+                        <StyledTableCell align="right">
+                          Mobile No.
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          Date & Time
+                        </StyledTableCell>
+                        <StyledTableCell align="right">Address</StyledTableCell>
+                        <StyledTableCell align="right">ZipCode</StyledTableCell>
+                        <StyledTableCell align="right">City</StyledTableCell>
+                        <StyledTableCell align="center">
+                          Payment
+                        </StyledTableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {data1.map((data1, index) => (
+                        <StyledTableRow key={index}>
+                          {data.length !== 0 && (
+                            <StyledTableCell component="th" scope="row">
+                              {data[index].name}
+                            </StyledTableCell>
+                          )}
+                          {data.length !== 0 && (
+                            <StyledTableCell align="right">
+                              {data[index].mobile}
+                            </StyledTableCell>
+                          )}
+                          <StyledTableCell align="right">
+                            {data1.dateTime}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {data1.address}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {data1.zipcode}
+                          </StyledTableCell>
+                          {data.length !== 0 && (
+                            <StyledTableCell align="right">
+                              {data[index].city}
+                            </StyledTableCell>
+                          )}
 
-                <Dialog open={open} onClose={handleToClose}>
-                  <DialogTitle style={{ color: "blue", margin: "auto" ,fontSize:'18px !important'}}>
-                    <b>Payment</b>
-                  </DialogTitle>
-                  <DialogContent>
-                    <DialogContentText style={{ color: "black" }}>
-                      <b>Amount :</b>  {data1.payamount}
-                    </DialogContentText>
-                    <DialogContentText style={{ color: "black" }}>
-                      <b>Description :</b> {data1.description}
-                    </DialogContentText>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={handleToClose} color="primary" autoFocus>
-                      Close
-                    </Button>
-                  </DialogActions>
-                </Dialog>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                          {data.length !== 0 && (
+                            <StyledTableCell align="center">
+                              <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={handleClickToOpen}
+                              >
+                                View
+                              </Button>
+                            </StyledTableCell>
+                          )}
+
+                          <Dialog open={open} onClose={handleToClose}>
+                            <DialogTitle
+                              style={{
+                                color: "blue",
+                                margin: "auto",
+                                fontSize: "18px !important",
+                              }}
+                            >
+                              <b>Payment</b>
+                            </DialogTitle>
+                            <DialogContent>
+                              <DialogContentText style={{ color: "black" }}>
+                                <b>Amount :</b> {data1.payamount}
+                              </DialogContentText>
+                              <DialogContentText style={{ color: "black" }}>
+                                <b>Description :</b> {data1.description}
+                              </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                              <Button
+                                onClick={handleToClose}
+                                color="primary"
+                                autoFocus
+                              >
+                                Close
+                              </Button>
+                            </DialogActions>
+                          </Dialog>
+                        </StyledTableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

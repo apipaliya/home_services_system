@@ -118,7 +118,6 @@ const Booking = () => {
               value={mobile}
               onChange={(e)=> setMobile(e.target.value)}
               />
-              
             </form>
           </MDBCol>
         </MDBRow>

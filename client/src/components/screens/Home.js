@@ -2,8 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Footer from "../Footer";
 import NavBar from "../Navbar";
+import {useLocation} from "react-router-dom";
 
 const Home = () => {
+  const location = useLocation();
+    window.history.pushState(null, "", window.location.href);
+    window.onpopstate = function () {
+        window.history.pushState(null, "", window.location.href);
+    };
   return (
     <>
       <NavBar />
@@ -74,7 +80,7 @@ const Home = () => {
                     </p>
                     <Link
                       className="mt-3 text-blue-500 inline-flex items-center"
-                      to="/carpenter"
+                      to="/usercarpenter"
                     >
                       Explore
                       <svg
@@ -108,7 +114,7 @@ const Home = () => {
                     </p>
                     <Link
                       className="mt-3 text-blue-500 inline-flex items-center "
-                      to="/electrician"
+                      to="/userelectrician"
                     >
                       Explore
                       <svg
@@ -142,7 +148,7 @@ const Home = () => {
                     </p>
                     <Link
                       className="mt-3 text-blue-500 inline-flex items-center"
-                      to="/plumber"
+                      to="/userplumber"
                     >
                       Explore
                       <svg
@@ -177,7 +183,7 @@ const Home = () => {
                     </p>
                     <Link
                       className="mt-3 text-blue-500 inline-flex items-center"
-                      to="/pestcontrol"
+                      to="/userpestcontrol"
                     >
                       Explore
                       <svg

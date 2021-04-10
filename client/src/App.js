@@ -7,26 +7,21 @@ import Signuppro from './components/screens/Signuppro'
 import Login from './components/screens/Login'
 import LoginPro from './components/screens/Loginpro'
 import Service from './components/screens/Service'
-import Reset from './components/screens/Reset'
+import Reset from './components/screens/UserReset'
 import UserHome from './components/screens/UserHome'
 import ProHome from './components/screens/ProHome'
 
-import NewPassword from './components/screens/Newpassword'
+import NewPassword from './components/screens/ProNewpassword'
 import ProfilePro from './components/screens/Profilepro'
 import { reducer, initialState } from './reducers/userReducer'
 
 import Admin from './components/screens/Admin';
 import AdminLogin from './components/screens/AdminLogin';
-import Carpenter from './components/screens/Carpenter';
 import UserCarpenter from './components/screens/UserCarpenter';
-import Plumber from './components/screens/Plumber';
 import UserPlumber from './components/screens/UserPlumber';
-import Electrician from './components/screens/Electrician';
 import UserElectrician from './components/screens/UserElectrician';
-import Pestcontrol from './components/screens/Pestcontrol';
 import UserPestcontrol from './components/screens/UserPestcontrol';
 import Booking from './components/screens/Booking';
-import Payment from './components/screens/Payment';
 import ProWork from './components/screens/Prowork';
 import ProHistory from './components/screens/ProHistory';
 import Contactus from './components/screens/Contactus';
@@ -35,6 +30,12 @@ import UserHistory from './components/screens/UserHistory';
 import Feedback from './components/screens/Feedback';
 import ProBookings from './components/screens/ProBookings';
 import UserPayment from './components/screens/UserPayment';
+import UserBookings from './components/screens/UserBookings';
+import UserReset from './components/screens/UserReset';
+import UserNewpassword from './components/screens/UserNewpassword';
+import ProNewpassword from './components/screens/ProNewpassword';
+import ProReset from './components/screens/ProReset';
+import AdminTransaction from './components/screens/AdminTransaction';
 
 export const UserContext = createContext()
 
@@ -61,6 +62,9 @@ const Routing = () => {
       <Route exact path="/admin">
         <Admin />
       </Route>
+      <Route exact path="/adminTransaction">
+        <AdminTransaction />
+      </Route>
       <Route exact path="/signup">
         <Signup />
       </Route>
@@ -85,29 +89,24 @@ const Routing = () => {
       <Route exact path="/service">
         <Service />
       </Route>
-      <Route exact path="/carpenter">
-        <Carpenter />
-      </Route>
+      
       <Route exact path="/usercarpenter">
         <UserCarpenter />
       </Route>
-      <Route exact path="/plumber">
-        <Plumber />
-      </Route>
+      
       <Route exact path="/userplumber">
         <UserPlumber />
       </Route>
-      <Route exact path="/electrician">
-        <Electrician />
-      </Route>
+     
       <Route exact path="/userelectrician">
         <UserElectrician />
       </Route>
-      <Route exact path="/pestcontrol">
-        <Pestcontrol />
-      </Route>
+      
       <Route exact path="/userpestcontrol">
         <UserPestcontrol />
+      </Route>
+      <Route exact path="/userBookings">
+        <UserBookings/>
       </Route>
       <Route exact path="/userHistory">
         <UserHistory/>
@@ -127,11 +126,17 @@ const Routing = () => {
       <Route path="/userPayment">
         <UserPayment />
       </Route>
-      <Route exact path="/reset">
-        <Reset />
+      <Route exact path="/user/reset">
+        <UserReset />
       </Route>
-      <Route path="/reset/:token">
-        <NewPassword />
+      <Route path="user/reset/:token">
+        <UserNewpassword />
+      </Route>
+      <Route exact path="/userpro/reset">
+        <ProReset />
+      </Route>
+      <Route path="userpro/reset/:token">
+        <ProNewpassword />
       </Route>
       <Route exact path="/booking">
         <Booking />

@@ -23,40 +23,6 @@ const Feedback = () => {
     [location]
   );
 
-  //   const [formState, inputHandler] = useForm(
-  //     {
-  //       feedback: {
-  //         value: "",
-  //         isValid: false,
-  //       },
-  //     },
-  //     false
-  //   );
-
-  // const placeSubmitHandler = async event => {
-  // 	event.preventDefault();
-  // 	try {
-  // 		// formData.append('title', formState.inputs.title.value);
-  // 		console.log(rating, formState.inputs.feedback.value);
-  // 		await sendRequest(
-  // 			'http://localhost:5000/api/viewplan/finalfeedback',
-  // 			'PATCH',
-  // 			JSON.stringify({
-  // 				userid: auth.userId,
-  // 				rating: rating,
-  // 				feedback: formState.inputs.feedback.value,
-  // 			}),
-  // 			{
-  // 				'Content-Type': 'application/json',
-  // 			}
-  // 		);
-  // 	} catch (err) {
-  // 	} finally {
-  // 		auth.endThis();
-  // 		history.push('/');
-  // 	}
-  // };
-
   const senddata = (e) => {
     e.preventDefault();
 
@@ -90,52 +56,7 @@ const Feedback = () => {
   };
 
   return (
-    // <React.Fragment>
-    // 	<ErrorModal error={error} onClear={clearError} />
-    // 	<Card
-    // 		className="authentication"
-    // 		style={{ textAlign: 'center', maxWidth: '450px', margin: 'auto' }}
-    // 	>
-    // 		{isLoading && <LoadingSpinner asOverlay />}
-    // 		<h2>Please Provide Feedback.</h2>
-    // 		<hr className="style-line" />
-    // 		<form className="place-form" onSubmit={placeSubmitHandler}>
-    // 			<div
-    // 				style={{
-    // 					dispaly: 'inline',
-    // 					width: '150px',
-    // 					margin: 'auto',
-    // 				}}
-    // 			>
-    // 				<ReactStars
-    // 					style={{ dispaly: 'inline', textAlign: 'center' }}
-    // 					count={5}
-    // 					isHalf={true}
-    // 					size={36}
-    // 					edit={true}
-    // 					value={0}
-    // 					activeColor="#fbcd0a"
-    // 					onChange={newRating => {
-    // 						setRating(newRating);
-    // 					}}
-    // 				/>
-    // 			</div>
-    // 			<Input
-    // 				className="feedback"
-    // 				id="feedback"
-    // 				element="textarea"
-    // 				label="Feedback"
-    // 				validators={[VALIDATOR_MINLENGTH(5)]}
-    // 				errorText="Please enter a valid feedback (at least 5 characters)."
-    // 				onInput={inputHandler}
-    // 				// style={{ marginLeft:"-10%" }}
-    // 			/>
-    // 			<Button type="submit" disabled={!formState.isValid}>
-    // 				SUBMIT
-    // 			</Button>
-    // 		</form>
-    // 	</Card>
-    // </React.Fragment>
+  
     <>
       <UserNavBar />
       {/* <!--Grid column--> */}
