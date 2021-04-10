@@ -54,7 +54,17 @@ const userproSchema = new mongoose.Schema({
     charge:{
         type:Number,
         default:0
-    }
+    },
+    rating:{
+        type:Number,
+        default:0
+    },
+    review:[{
+        type:String,
+        
+    }],
+    resetToken:String,
+    expireToken:Date
 })
 
-mongoose.model("UserPro",userproSchema)
+mongoose.model("UserPro",userproSchema) 

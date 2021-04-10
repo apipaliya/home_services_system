@@ -23,8 +23,9 @@ const userSchema = new mongoose.Schema({
     city:{
         type:String,
         required:true
-    }
-  
+    },
+    resetToken:String,
+    expireToken:Date
     
 })
 

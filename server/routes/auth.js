@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const User = mongoose.model("User");
 const UserPro = mongoose.model("UserPro");
 const Admin = mongoose.model("Admin");
+const ContactUs = mongoose.model("ContactUs");  
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -300,6 +301,7 @@ router.get("/charge", requireLogin, (req, res) => {
       arr1.push(userpros.name);
       arr1.push(userpros.image);
       arr1.push(userpros.address);
+      arr1.push(userpros.rating);
       res.json(arr1);
     })
     .catch((err) => {
@@ -309,7 +311,6 @@ router.get("/charge", requireLogin, (req, res) => {
 
 router.post("/updatecharge", requireLogin, (req, res) => {
   const { charge } = req.body;
-  const { available } = req.body;
   const _id = req.userPro._id;
   if (!charge) {
     return res.status(422).json({ error: "Plase add all the fields" });
@@ -404,6 +405,9 @@ router.get("/electricianPro", (req, res) => {
 });
 
 router.get("/verifyProfessional", adminrequireLogin, (req, res) => {
+  if(!req.admin){
+    return res.status(422).json({error:"required login"});
+  }
   UserPro.find({ valid: 0 })
     .then((userpros) => {
       res.json(userpros);
@@ -423,7 +427,7 @@ router.post("/reset-password", (req, res) => {
       if (!user) {
         return res
           .status(422)
-          .json({ error: "User dont exists with that email" });
+          .json({ error: "User don't exists with that email" });
       }
       user.resetToken = token;
       user.expireToken = Date.now() + 3600000;
@@ -459,6 +463,65 @@ router.post("/new-password", (req, res) => {
           res.json({ message: "password updated success" });
         });
       });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+
+router.post("/contactDone", adminrequireLogin, (req, res) => {
+  const { email } = req.body;
+  console.log(email);
+  ContactUs.findOneAndUpdate(
+    { email },
+    { $set: { done: 1 } },
+    { new: true },
+    (err, doc) => {
+      if (err) {
+        console.log("Something wrong when updating data!");
+      } else {
+        res.status(200).json(doc);
+      }
+    }
+  )
+    .then((inf) => {
+      // console.log(inf);
+    })
+    .catch((err) => console.log(err));
+});
+
+router.get("/contactRemaining", adminrequireLogin, (req, res) => {
+  if(!req.admin){
+    return res.status(422).json({error:"required login"});
+  }
+  ContactUs.find({ done: 0 })
+    .then((userpros) => {
+      res.json(userpros);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.post("/contactusdata", (req, res) => {
+  const { name,email,subject,text } = req.body;
+  if (!name || !email || !subject || !text) {
+    return res.status(422).json({ error: "Plase add all the fields" });
+  }
+ 
+  const post = new ContactUs({
+    name,
+    email,
+    subject,
+    text
+    
+  });
+  post
+    .save()
+    .then((result) => {
+      console.log(result);
+      res.json({ post: result });
     })
     .catch((err) => {
       console.log(err);

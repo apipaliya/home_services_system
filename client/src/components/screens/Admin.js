@@ -12,6 +12,7 @@ import DoneOutlineIcon from "@material-ui/icons/DoneOutline";
 import IconButton from "@material-ui/core/IconButton";
 import CancelIcon from "@material-ui/icons/Cancel";
 import Footer from "../Footer";
+import { useHistory } from "react-router";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -38,6 +39,7 @@ const useStyles = makeStyles({
 });
 
 const Admin = () => {
+  const history = useHistory();
   const classes = useStyles();
 
   const [data, setdata] = useState([
@@ -64,6 +66,7 @@ const Admin = () => {
       .then((datadetail) => {
         if (datadetail.error) {
           console.log(datadetail.error);
+          history.push("/adminLogin");
         } else {
           console.log(datadetail);
           setdata(datadetail);
@@ -77,7 +80,8 @@ const Admin = () => {
   return (
     <>
       <AdminNavbar />
-
+      <br />
+      <p className="h4 text-center blue-text">Verify Professionals</p>
       <br />
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="customized table">
@@ -110,7 +114,7 @@ const Admin = () => {
 
                 <StyledTableCell align="center">
                   <IconButton
-                    color="primary"
+                    style={{ color: "green" }}
                     type="submit"
                     onClick={(e) => {
                       e.preventDefault();
@@ -165,7 +169,7 @@ const Admin = () => {
                   </IconButton>
 
                   <IconButton
-                    color="primary"
+                    style={{ color: "red" }}
                     type="submit"
                     onClick={(e) => {
                       e.preventDefault();
@@ -224,7 +228,6 @@ const Admin = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Footer/>
     </>
   );
 };

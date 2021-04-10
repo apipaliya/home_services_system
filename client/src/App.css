@@ -7,6 +7,44 @@ a{
   font-family: initial;
 }
 
+.bcolor{
+  background-color:darkslategrey  !important;
+  margin-left:auto !important;
+  margin-right: 1rem !important;
+  margin-top: auto !important;
+  margin-bottom: auto !important;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 10rem;
+  padding: .5rem 0;
+  margin: .125rem 0 0;
+  font-size: 1rem;
+  color: #868d94!important;
+  text-align: center !important;
+  list-style: none;
+  background-color: #1e88e5!important;
+  background-clip: padding-box;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: .25rem;
+}
+
+.dropdown-item:hover {
+  color: #ffffff;
+  text-decoration: none;
+  background-color: #4b5563 !important;
+}
+
+.dropdown-menu a:not(.active) {
+  color: #ffffff !important;
+}
+
 .card{
   border-radius: 1.25rem !important;
 }

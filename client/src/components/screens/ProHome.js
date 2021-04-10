@@ -14,13 +14,17 @@ import {
   MDBCardText,
   MDBCol,
 } from "mdbreact";
+import ReactStars from "react-rating-stars-component";
+
 
 const ProHome = () => {
   const [charge, setCharge] = useState("");
+  const [rating, setRating] = useState("");
   const [available, setAvailable] = useState(false);
   const [image, setImage] = useState("");
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
+  const [firsttime, setFirsttime] = useState(false);
 
   const handleChange = (checked) => {
     console.log(checked);
@@ -31,6 +35,7 @@ const ProHome = () => {
     e.preventDefault();
     console.log(charge);
     console.log(available);
+
 
     fetch("/updatecharge", {
       method: "post",
@@ -59,26 +64,28 @@ const ProHome = () => {
   };
 
   useEffect(() => {
-    fetch("/updateAvailable", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("jwt"),
-      },
-      body: JSON.stringify({
-        available,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.error) {
-          console.log(data.error);
-        } else {
-        }
+    if (firsttime) {
+      fetch("/updateAvailable", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
+        body: JSON.stringify({
+          available,
+        }),
       })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.error) {
+            console.log(data.error);
+          } else {
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }, [available]);
 
   useEffect(() => {
@@ -100,6 +107,10 @@ const ProHome = () => {
           setName(datadetail[2]);
           setImage(datadetail[3]);
           setAddress(datadetail[4]);
+          setRating(datadetail[5]);
+          console.log(datadetail[5],"rating",rating);
+          setFirsttime(true);
+          
         }
       })
       .catch((err) => {
@@ -118,6 +129,23 @@ const ProHome = () => {
             <MDBCardBody>
               <MDBCardTitle>{name}</MDBCardTitle>
               <MDBCardText>{address}</MDBCardText>
+              <div
+                    style={{
+                      dispaly: "inline",
+                      width: "150px",
+                      margin: "auto",
+                    }}
+                  >
+                    <ReactStars
+                      style={{ dispaly: "inline", textAlign: "center" }}
+                      count={5}
+                      isHalf={true}
+                      size={36}
+                      edit={false}
+                      value={rating}
+                      activeColor="#fbcd0a"
+                    />
+                  </div>
               <div className="flex">
                 <span className="title-font font-medium text-2xl text-gray-900 left text-center py-2">
                   {charge}&nbsp;Rs/Hr
@@ -165,8 +193,6 @@ const ProHome = () => {
                     onChange={handleChange}
                   />
                 </label>
-
-                
               </div>
             </MDBCardBody>
           </MDBCard>

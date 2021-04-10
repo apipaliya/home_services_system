@@ -62,7 +62,7 @@ const AdminLogin =() => {
             >
                Login As A Admin
             </button>
-            
+            <br/>
             <h6>
                 <Link to="/reset">Forgot password ?</Link>
             </h6>

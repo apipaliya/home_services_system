@@ -1,5 +1,4 @@
 import React, { Component } from "react"
-
 import {
   MDBNavbar,
   MDBNavbarBrand,
@@ -8,6 +7,10 @@ import {
   MDBNavLink,
   MDBNavbarToggler,
   MDBCollapse,
+  MDBDropdown,
+  MDBDropdownToggle,
+  MDBDropdownMenu,
+  MDBDropdownItem,
 } from "mdbreact";
 
 class ProNavBar extends Component {
@@ -35,7 +38,18 @@ class ProNavBar extends Component {
               <MDBNavLink to="/profilepro">Profile</MDBNavLink>
             </MDBNavItem>
             <MDBNavItem>
-              <MDBNavLink to="/about">About Us</MDBNavLink>
+              <MDBDropdown>
+                <MDBDropdownToggle nav caret>
+                  <div className="d-md-inline d-sm-inline d-inline">Appointments</div>
+                </MDBDropdownToggle>
+                <MDBDropdownMenu className="dropdown-default">
+                  <MDBDropdownItem href="/appointments">
+                    Accept/Reject
+                  </MDBDropdownItem>
+                  <MDBDropdownItem href="/todo">TO DO</MDBDropdownItem>
+                  <MDBDropdownItem href="/proworkHistory">History</MDBDropdownItem>
+                </MDBDropdownMenu>
+              </MDBDropdown>
             </MDBNavItem>
             <MDBNavItem>
               <MDBNavLink to="/contactus">Contact Us</MDBNavLink>

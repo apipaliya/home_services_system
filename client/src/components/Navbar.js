@@ -16,7 +16,7 @@ import {
 
 class NavBar extends Component {
   state = {
-    isOpen: false,
+    isOpen: false, 
   };
 
   toggleCollapse = () => {
@@ -56,7 +56,7 @@ class NavBar extends Component {
                 <MDBDropdownToggle nav caret>
                   <div className="d-md-inline d-sm-inline d-inline">Signin</div>
                 </MDBDropdownToggle>
-                <MDBDropdownMenu className="dropdown-default">
+                <MDBDropdownMenu className="dropdown-default" >
                   <MDBDropdownItem href="/loginpro">
                     Professional
                   </MDBDropdownItem>
@@ -65,9 +65,7 @@ class NavBar extends Component {
                 </MDBDropdownMenu>
               </MDBDropdown>
             </MDBNavItem>
-            <MDBNavItem>
-              <MDBNavLink to="/about">About Us</MDBNavLink>
-            </MDBNavItem>
+            
             <MDBNavItem>
               <MDBNavLink to="/contactus">Contact Us</MDBNavLink>
             </MDBNavItem>

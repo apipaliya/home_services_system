@@ -49,7 +49,7 @@ const UserHome = () => {
               <h1 className="sm:text-3xl text-5xl font-medium title-font mb-4 text-gray-900">
                 Our Services
               </h1>
-              <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
+              <p className="lg:w-2/3 mx-auto leading-relaxed text-base">
                 This platform is to make our urban lives more fulfilling to
                 solve our needs in a clap. They want to be the go-to platform
                 helping customers to complete the projects that are important to
