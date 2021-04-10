@@ -9,6 +9,10 @@ a{
 
 .bcolor{
   background-color:darkslategrey  !important;
+  margin-left:auto !important;
+  margin-right: 1rem !important;
+  margin-top: auto !important;
+  margin-bottom: auto !important;
 }
 
 .dropdown-menu {

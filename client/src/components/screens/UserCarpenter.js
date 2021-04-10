@@ -112,7 +112,7 @@ const UserCarpenter = () => {
                       className="img-fluid"
                       style={{
                         width: "307px",
-                        height: "270px",
+                        height: "267px",
                         borderTopRightRadius: "1.25rem",
                         borderTopLeftRadius: "1.25rem",
                         margin: "auto",
@@ -204,10 +204,10 @@ const UserCarpenter = () => {
                       </div>
                       <div className="flex">
                         <span className="font-medium text-2xl text-black left text-center py-2">
-                         Price:{pro.charge}&nbsp;&#8377;/Hr
+                         Price:{pro.charge}&nbsp;&#8377;
                         </span>
                         <Button
-                          className="bcolor flex m-auto text-white border-0 py-auto px-auto focus:outline-none rounded "
+                          className="bcolor flex text-white border-0 py-auto px-auto focus:outline-none rounded "
                             variant="contained"
                            
                             onClick={(e) => {
@@ -221,6 +221,9 @@ const UserCarpenter = () => {
                             Book
                           </Button>
                       </div>
+                      <MDBCardText>
+                      <p style={{color:'red',fontSize:'small',margin:'auto'}}>(note:here mention is only visiting charge)</p>
+                      </MDBCardText>
                     </MDBCardBody>
                   </MDBCard>
                 </MDBCol>
