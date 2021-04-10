@@ -11,6 +11,10 @@ const bookingSchema = new mongoose.Schema({
         type:String,
         default:""
     },
+    zipcode:{
+        type:Number,
+        default:0
+    },
     bookedBy:{
         type:ObjectId,
         ref:"User"
@@ -22,6 +26,22 @@ const bookingSchema = new mongoose.Schema({
     paymentStatus:{
         type:Number,
         default:0
+    },
+    visit:{
+        type:Number,
+        default:0
+    },
+    confirm:{
+        type:Number,
+        default:0
+    },
+    payamount:{
+        type:Number,
+        default:0
+    },
+    description:{
+        type:String,
+        default:""
     }
        
 })

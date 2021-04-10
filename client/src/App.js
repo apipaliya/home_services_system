@@ -14,7 +14,7 @@ import ProHome from './components/screens/ProHome'
 import NewPassword from './components/screens/Newpassword'
 import ProfilePro from './components/screens/Profilepro'
 import { reducer, initialState } from './reducers/userReducer'
-import UserService from './components/screens/UserService';
+
 import Admin from './components/screens/Admin';
 import AdminLogin from './components/screens/AdminLogin';
 import Carpenter from './components/screens/Carpenter';
@@ -27,6 +27,14 @@ import Pestcontrol from './components/screens/Pestcontrol';
 import UserPestcontrol from './components/screens/UserPestcontrol';
 import Booking from './components/screens/Booking';
 import Payment from './components/screens/Payment';
+import ProWork from './components/screens/Prowork';
+import ProHistory from './components/screens/ProHistory';
+import Contactus from './components/screens/Contactus';
+import AdminContact from './components/screens/AdminContact';
+import UserHistory from './components/screens/UserHistory';
+import Feedback from './components/screens/Feedback';
+import ProBookings from './components/screens/ProBookings';
+import UserPayment from './components/screens/UserPayment';
 
 export const UserContext = createContext()
 
@@ -101,14 +109,23 @@ const Routing = () => {
       <Route exact path="/userpestcontrol">
         <UserPestcontrol />
       </Route>
-      <Route exact path="/userService">
-        <UserService />
+      <Route exact path="/userHistory">
+        <UserHistory/>
       </Route>
       <Route path="/profilepro">
         <ProfilePro />
       </Route>
-      <Route path="/payment">
-        <Payment />
+      <Route path="/todo">
+        <ProWork />
+      </Route>
+      <Route path="/appointments">
+        <ProBookings />
+      </Route>
+      <Route path="/proworkHistory">
+        <ProHistory />
+      </Route>
+      <Route path="/userPayment">
+        <UserPayment />
       </Route>
       <Route exact path="/reset">
         <Reset />
@@ -118,6 +135,15 @@ const Routing = () => {
       </Route>
       <Route exact path="/booking">
         <Booking />
+      </Route>
+      <Route exact path="/contactus">
+        <Contactus />
+      </Route>
+      <Route exact path="/adminContact">
+        <AdminContact />
+      </Route>
+      <Route exact path="/userFeedback">
+        <Feedback/>
       </Route>
     </Switch>
   )

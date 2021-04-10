@@ -39,7 +39,6 @@ const useStyles = makeStyles({
 });
 
 const Admin = () => {
-
   const history = useHistory();
   const classes = useStyles();
 
@@ -67,7 +66,7 @@ const Admin = () => {
       .then((datadetail) => {
         if (datadetail.error) {
           console.log(datadetail.error);
-          history.push("/adminLogin")
+          history.push("/adminLogin");
         } else {
           console.log(datadetail);
           setdata(datadetail);
@@ -81,7 +80,8 @@ const Admin = () => {
   return (
     <>
       <AdminNavbar />
-
+      <br />
+      <p className="h4 text-center blue-text">Verify Professionals</p>
       <br />
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="customized table">
@@ -114,7 +114,7 @@ const Admin = () => {
 
                 <StyledTableCell align="center">
                   <IconButton
-                    color="primary"
+                    style={{ color: "green" }}
                     type="submit"
                     onClick={(e) => {
                       e.preventDefault();
@@ -169,7 +169,7 @@ const Admin = () => {
                   </IconButton>
 
                   <IconButton
-                    color="primary"
+                    style={{ color: "red" }}
                     type="submit"
                     onClick={(e) => {
                       e.preventDefault();
@@ -228,7 +228,6 @@ const Admin = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Footer/>
     </>
   );
 };

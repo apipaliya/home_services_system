@@ -6,13 +6,13 @@ import M from "materialize-css";
 import { useHistory } from "react-router-dom";
 import {useLocation} from "react-router-dom";
 
-
 const Booking = () => {
   const history = useHistory();
   const location = useLocation();
   const [dateTime, setDateTime] = useState("");
   const [address, setAddress] = useState("");
   const [mobile, setMobile] = useState("");
+  const [zipcode, setZipcode] = useState("");
 
   const [professionalsid, setProfessionalsid] = useState("");
 
@@ -38,6 +38,7 @@ const Booking = () => {
       body: JSON.stringify({
         dateTime,
         address,
+        zipcode,
         professionalsid
       }),
     })
@@ -89,7 +90,7 @@ const Booking = () => {
           
           <MDBCol md="10" className="mx-auto">
             <form>
-              <p className="h4 text-center mb-4 my-10">Contact Info</p>
+              <p className="h4 text-center mb-4 my-10">Appointment</p>
               <label for="street/area" className="grey-text">
                 Street/Area*
               </label>
@@ -98,6 +99,16 @@ const Booking = () => {
                 className="form-control"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
+              />
+              <br />
+              <label for="street/area" className="grey-text">
+                ZipCode
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                value={zipcode}
+                onChange={(e) => setZipcode(e.target.value)}
               />
               <br />
               <label for="phone" className="grey-text">

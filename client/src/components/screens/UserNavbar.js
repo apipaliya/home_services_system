@@ -32,11 +32,9 @@ class UserNavBar extends Component {
               <MDBNavLink to="/userHome">Home</MDBNavLink>
             </MDBNavItem>
             <MDBNavItem >
-              <MDBNavLink to="/userService">Service</MDBNavLink>
+              <MDBNavLink to="/userHistory">Your Bookings</MDBNavLink>
             </MDBNavItem>
-            <MDBNavItem>
-              <MDBNavLink to="/about">About Us</MDBNavLink>
-            </MDBNavItem>
+            
             <MDBNavItem>
               <MDBNavLink to="/contactus">Contact Us</MDBNavLink>
             </MDBNavItem>
