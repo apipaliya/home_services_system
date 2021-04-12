@@ -100,16 +100,3 @@ label{
   width: 100%;
 }
 
-.signup-button{
-  margin: 15px 120px !important; 
-  border-radius: 5px !important;
-}
-
-.anima::before{
-  transition-duration: 5s;
-  translate: translateX(50%);
-}
-.anima::after{
-  transition-duration: 5s;
-  translate: translateX(0);
-}
