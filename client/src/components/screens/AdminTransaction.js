@@ -73,6 +73,8 @@ const AdminTransaction = () => {
         } else {
           setdata(datadetail[0]);
           setdata1(datadetail[1]);
+          console.log(datadetail[0]);
+          console.log(datadetail[1]);
         }
       })
       .catch((err) => {
@@ -135,38 +137,38 @@ const AdminTransaction = () => {
                     <TableBody>
                       {data1.map((data1, index) => (
                         <StyledTableRow key={index}>
-                          {data.length !== 0 && (
+                          {data1.length !== 0 && (
                             <StyledTableCell component="th" scope="row">
-                              {data[index].paymentid}
+                              {data1.paymentid}
                             </StyledTableCell>
                           )}
-                          {data.length !== 0 && (
+                          {data1.length !== 0 && (
                             <StyledTableCell align="right">
-                              {data[index].senderemail}
+                              {data1.senderemail}
                             </StyledTableCell>
                           )}
-                          {data.length !== 0 && (
+                          {data1.length !== 0 && (
                             <StyledTableCell align="right">
-                              {data[index].receiveremail}
+                              {data1.receiveremail}
                             </StyledTableCell>
                           )}
-                          {data.length !== 0 && (
+                          {data1.length !== 0 && (
                             <StyledTableCell align="right">
-                              {data[index].bookingid}
+                              {data1.bookingid}
                             </StyledTableCell>
                           )}
                           <StyledTableCell align="right">
-                            {data[index].date}
+                            {data1.date}
                           </StyledTableCell>
                           <StyledTableCell align="right">
-                            {data[index].Amount}
+                            {data1.Amount}
                           </StyledTableCell>
                           <StyledTableCell align="right">
-                            {data1.description}
+                            {data[index].description}
                           </StyledTableCell>
 
                           <StyledTableCell align="center">
-                            {data[index].paymentstatus ? (
+                            {data1.paymentstatus ? (
                               <h5>
                                 <Badge variant="success">Success</Badge>{" "}
                               </h5>

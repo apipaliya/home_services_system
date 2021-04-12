@@ -9,34 +9,13 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import ProNavBar from "./ProNavbar";
-
-import { useHistory } from "react-router";
+import Badge from "react-bootstrap/Badge";
+import { useHistory } from "react-router-dom";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-
-import Modal from "@material-ui/core/Modal";
-import Backdrop from "@material-ui/core/Backdrop";
-import Fade from "@material-ui/core/Fade";
-
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  paper: {
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-  table: {
-    minWidth: 700,
-  },
-}));
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -56,24 +35,24 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-// const useStyles = makeStyles({
-//   table: {
-//     minWidth: 700,
-//   },
-
-// });
+const useStyles = makeStyles({
+  table: {
+    minWidth: 700,
+  },
+});
 
 const ProHistory = () => {
-  const history = useHistory();
   const classes = useStyles();
-
+  const history = useHistory();
   const [open, setOpen] = React.useState(false);
+  const [payamount, setPayamount] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  const [paymentStatus, setPaymentstatus] = React.useState("");
 
-  const handleClickToOpen = () => {
+  const handleClickOpen = () => {
     setOpen(true);
   };
-
-  const handleToClose = () => {
+  const handleClose = () => {
     setOpen(false);
   };
 
@@ -95,6 +74,7 @@ const ProHistory = () => {
       _id: "",
       description: "",
       payamount: "",
+      paymentStatus: "",
     },
   ]);
 
@@ -125,7 +105,7 @@ const ProHistory = () => {
   return (
     <>
       <ProNavBar />
-
+      
       <br />
       <div className="content">
         <div className="container-fluid">
@@ -133,7 +113,7 @@ const ProHistory = () => {
             <div className="col-md-12">
               <div className="card">
                 <div
-                  class="h4 card-header"
+                  className="h4 card-header"
                   style={{
                     backgroundColor: "#2196f3",
                     color: "white",
@@ -160,10 +140,11 @@ const ProHistory = () => {
                           Date & Time
                         </StyledTableCell>
                         <StyledTableCell align="right">Address</StyledTableCell>
-                        <StyledTableCell align="right">ZipCode</StyledTableCell>
-                        <StyledTableCell align="right">City</StyledTableCell>
+                        <StyledTableCell align="right">Amount</StyledTableCell>
+                        <StyledTableCell align="right">Description</StyledTableCell>
+                        
                         <StyledTableCell align="center">
-                          Payment
+                          Payment Status
                         </StyledTableCell>
                       </TableRow>
                     </TableHead>
@@ -187,54 +168,25 @@ const ProHistory = () => {
                             {data1.address}
                           </StyledTableCell>
                           <StyledTableCell align="right">
-                            {data1.zipcode}
+                            {data1.payamount}
                           </StyledTableCell>
                           {data.length !== 0 && (
                             <StyledTableCell align="right">
-                              {data[index].city}
+                              {data1.description}
                             </StyledTableCell>
                           )}
 
-                          {data.length !== 0 && (
-                            <StyledTableCell align="center">
-                              <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={handleClickToOpen}
-                              >
-                                View
-                              </Button>
-                            </StyledTableCell>
-                          )}
-
-                          <Dialog open={open} onClose={handleToClose}>
-                            <DialogTitle
-                              style={{
-                                color: "blue",
-                                margin: "auto",
-                                fontSize: "18px !important",
-                              }}
-                            >
-                              <b>Payment</b>
-                            </DialogTitle>
-                            <DialogContent>
-                              <DialogContentText style={{ color: "black" }}>
-                                <b>Amount :</b> {data1.payamount}
-                              </DialogContentText>
-                              <DialogContentText style={{ color: "black" }}>
-                                <b>Description :</b> {data1.description}
-                              </DialogContentText>
-                            </DialogContent>
-                            <DialogActions>
-                              <Button
-                                onClick={handleToClose}
-                                color="primary"
-                                autoFocus
-                              >
-                                Close
-                              </Button>
-                            </DialogActions>
-                          </Dialog>
+                          <StyledTableCell align="center">
+                            {data1.paymentStatus ? (
+                              <h5>
+                                <Badge variant="success">Success</Badge>{" "}
+                              </h5>
+                            ) : (
+                              <h5>
+                                <Badge variant="danger">Failed</Badge>{" "}
+                              </h5>
+                            )}
+                          </StyledTableCell>
                         </StyledTableRow>
                       ))}
                     </TableBody>

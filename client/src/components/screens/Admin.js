@@ -81,8 +81,24 @@ const Admin = () => {
     <>
       <AdminNavbar />
       <br />
-      <p className="h4 text-center blue-text">Verify Professionals</p>
-      <br />
+      <div className="content">
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="card">
+                <div
+                  class="h4 card-header"
+                  style={{
+                    backgroundColor: "#2196f3",
+                    color: "white",
+                    borderRadius: "0.50rem",
+                    fontFamily: "Roboto !important",
+                  }}
+                >
+                  <p className="m-auto text-center">Verify Professional</p>
+                </div>
+              </div>
+              <div className="card">
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="customized table">
           <TableHead>
@@ -228,6 +244,11 @@ const Admin = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      </div>
+     </div>
+     </div>
+     </div>
+     </div>
     </>
   );
 };

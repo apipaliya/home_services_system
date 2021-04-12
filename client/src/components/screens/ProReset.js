@@ -40,7 +40,7 @@ const ProReset  = ()=>{
             value={email}
             onChange={(e)=>setEmail(e.target.value)}
             />
-            <button className="btn waves-effect waves-light #64b5f6 blue darken-1"
+            <button className="btn waves-effect waves-light text-white blue darken-1"
             onClick={()=>PostData()}
             >
                reset password

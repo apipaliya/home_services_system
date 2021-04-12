@@ -51,7 +51,7 @@ const UserPestcontrol = () => {
       city: "",
       _id: "",
       rating: "",
-      review: "",
+      review: [],
     },
   ]);
 
@@ -68,8 +68,8 @@ const UserPestcontrol = () => {
         if (datadetail.error) {
           console.log(datadetail.error);
         } else {
-          console.log(datadetail);
           setProfessionals(datadetail);
+          console.log(datadetail[1].review.map(m=>m));
         }
       })
       .catch((err) => {
@@ -80,7 +80,7 @@ const UserPestcontrol = () => {
   return (
     <>
       <UserNavBar />
-      <MDBRow className="m-auto" style={{ backgroundColor: "#f2f2f2" }}>
+      <MDBRow className="m-auto" >
         {professionals.map((pro, index) => {
           return (
             <>
@@ -174,7 +174,7 @@ const UserPestcontrol = () => {
                           </DialogTitle>
                           <DialogContent>
                             <DialogContentText style={{ color: "black" }}>
-                              {pro.review}
+                              {pro.review.map((m)=><ul> <li> -&gt; {m} </li> </ul>)}
                             </DialogContentText>
                           </DialogContent>
                           <DialogActions>

@@ -51,7 +51,7 @@ const UserPlumber = () => {
       city: "",
       _id: "",
       rating: "",
-      review: "",
+      review: [],
     },
   ]);
 
@@ -80,7 +80,7 @@ const UserPlumber = () => {
   return (
     <>
       <UserNavBar />
-      <MDBRow className="m-auto" style={{ backgroundColor: "#f2f2f2" }}>
+      <MDBRow className="m-auto">
         {professionals.map((pro, index) => {
           return (
             <>
@@ -174,7 +174,7 @@ const UserPlumber = () => {
                           </DialogTitle>
                           <DialogContent>
                             <DialogContentText style={{ color: "black" }}>
-                              {pro.review}
+                              {pro.review.map((m)=><ul> <li> -&gt; {m} </li> </ul>)}
                             </DialogContentText>
                           </DialogContent>
                           <DialogActions>

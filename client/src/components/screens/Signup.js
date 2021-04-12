@@ -88,12 +88,12 @@ const Signup =() => {
             value={city}
             onChange={(e)=>setCity(e.target.value)}
             />
-            <button className="btn waves-effect waves-light #64b5f6 blue darken-1"
+            <button className="btn waves-effect waves-light text-white blue darken-1 p-auto"
             onClick={()=>PostData()}
             >
                 SignUP
             </button>
-            <h5>
+            <h5 className='mt-2'>
                 <Link to="/login">Already have an account ?</Link>
             </h5>
     

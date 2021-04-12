@@ -218,7 +218,7 @@ router.post("/loginpro", (req, res) => {
   });
 });
 
-router.post("/profilepro", requireLogin, (req, res) => {
+router.post("/profileImg", requireLogin, (req, res) => {
   const { image } = req.body;
   const _id = req.userPro._id;
   console.log(image, _id);
@@ -278,16 +278,6 @@ router.post("/verificationCancel", adminrequireLogin, (req, res) => {
     .catch((err) => console.log(err));
 });
 
-router.get("/profilepro", requireLogin, (req, res) => {
-  var _id = req.userPro._id;
-  UserPro.findById(_id)
-    .then((userpros) => {
-      res.json(userpros);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
 
 router.get("/charge", requireLogin, (req, res) => {
   var arr1 = [];
@@ -299,7 +289,11 @@ router.get("/charge", requireLogin, (req, res) => {
       arr1.push(userpros.name);
       arr1.push(userpros.image);
       arr1.push(userpros.address);
+      arr1.push(userpros.zipcode);
+      arr1.push(userpros.review);
       arr1.push(userpros.rating);
+      arr1.push(userpros.city);
+      arr1.push(userpros.mobile);
       res.json(arr1);
     })
     .catch((err) => {
@@ -307,6 +301,32 @@ router.get("/charge", requireLogin, (req, res) => {
     });
 });
 
+router.post("/updateProfile", requireLogin, (req, res) => {
+  console.log("updateProfile")
+  const { name, mobile, address, city, zipcode } = req.body;
+  const _id = req.userPro._id;
+  if (!name || !mobile || !address || !city || !zipcode) {
+    return res.status(422).json({ error: "Plase add all the fields" });
+  }
+  UserPro.findOneAndUpdate(
+    { _id },
+    {
+      $set: {
+        name,
+        mobile,
+        address,
+        city,
+        zipcode,
+      },
+    }
+  )
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 router.post("/updatecharge", requireLogin, (req, res) => {
   const { charge } = req.body;
   const _id = req.userPro._id;

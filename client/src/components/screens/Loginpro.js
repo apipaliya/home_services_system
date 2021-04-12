@@ -42,7 +42,7 @@ const LoginPro = () => {
             html: "signed in successfully",
             classes: "#43a047 green darken-1",
           });
-          history.push("/proHome");
+          history.push("/profilepro");
         }
       })
       .catch((err) => {
@@ -68,12 +68,12 @@ const LoginPro = () => {
             onChange={(e) => setPasword(e.target.value)}
           />
           <button
-            className="btn waves-effect waves-light #64b5f6 blue darken-1"
+            className="btn waves-effect waves-light text-white blue darken-1"
             onClick={() => PostData()}
           >
             Login As A Professional
           </button>
-          <h5>
+          <h5 className='mt-2'>
             <Link to="/signuppro">Dont have an account ?</Link>
           </h5>
           <h6>

@@ -136,7 +136,7 @@ router.get("/workDone", requireLogin, (req, res) => {
   if (!req.userPro) {
     return res.status(422).json({ error: "required login" });
   }
-  Booking.find({ provider, paymentStatus: 1, visit: 1 })
+  Booking.find({ provider, visit: 1 ,confirm:1})
     .then(async (data) => {
       console.log(data);
       for (i = 0, len = data.length; i < len; i++) {
@@ -147,6 +147,7 @@ router.get("/workDone", requireLogin, (req, res) => {
           zipcode: data[i].zipcode,
           payamount: data[i].payamount,
           description: data[i].description,
+          paymentStatus: data[i].paymentStatus,
         };
         array1.push(d1);
         var sid = data[i].bookedBy;
@@ -240,7 +241,7 @@ router.get("/userworkDone", userrequireLogin, (req, res) => {
   if (!req.user) {
     return res.status(422).json({ error: "required login" });
   }
-  Booking.find({ bookedBy, visit: 1, confirm: 1 })
+  Booking.find({ bookedBy, visit: 1, confirm: 1 ,paymentStatus:1})
     .then(async (data) => {
       for (i = 0, len = data.length; i < len; i++) {
         var d1 = {
@@ -259,6 +260,7 @@ router.get("/userworkDone", userrequireLogin, (req, res) => {
       array2.push(array);
       array2.push(array1);
       res.json(array2);
+      console.log(array2);
     })
     .catch((err) => {
       console.log(err);
@@ -282,6 +284,7 @@ router.get("/transaction", adminrequireLogin, (req, res) => {
           date: data[i].date,
           senderemail: data[i].senderemail,
           receiveremail: data[i].receiveremail,
+          bookingid: data[i].bookingid,
           Amount: data[i].Amount,
           paymentstatus: data[i].paymentstatus,
         };
@@ -301,7 +304,7 @@ router.get("/transaction", adminrequireLogin, (req, res) => {
 });
 
 router.post("/workSuccess", userrequireLogin, (req, res) => {
-  const { _id, payamount, description } = req.body;
+  const { _id } = req.body;
   Booking.findOneAndUpdate(
     { _id },
     { $set: { visit: 1, payamount, description, paymentStatus: 1 } },

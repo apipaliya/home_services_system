@@ -38,7 +38,6 @@ const UserHome = () => {
           </div>
         </section>
       </div>
-      <hr />
       <div className="card card-home">
         <section className="text-gray-600 body-font">
           <div className="container px-5 py-24 mx-auto">

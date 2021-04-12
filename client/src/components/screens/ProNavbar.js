@@ -37,9 +37,6 @@ class ProNavBar extends Component {
         <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
           <MDBNavbarNav right>
             <MDBNavItem>
-              <MDBNavLink to="/proHome">Home</MDBNavLink>
-            </MDBNavItem>
-            <MDBNavItem>
               <MDBNavLink to="/profilepro">Profile</MDBNavLink>
             </MDBNavItem>
             <MDBNavItem>

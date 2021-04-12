@@ -9,7 +9,6 @@ import LoginPro from './components/screens/Loginpro'
 import Service from './components/screens/Service'
 import Reset from './components/screens/UserReset'
 import UserHome from './components/screens/UserHome'
-import ProHome from './components/screens/ProHome'
 
 import NewPassword from './components/screens/ProNewpassword'
 import ProfilePro from './components/screens/Profilepro'
@@ -71,9 +70,7 @@ const Routing = () => {
       <Route exact path="/userHome">
         <UserHome />
       </Route>
-      <Route exact path="/proHome">
-        <ProHome />
-      </Route>
+      
       <Route exact path="/signuppro">
         <Signuppro />
       </Route>
