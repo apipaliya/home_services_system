@@ -27,7 +27,7 @@ const Service = () => {
               </p>
             </div>
             <div className="flex flex-wrap -m-12">
-              <div className="p-10 md:w-1/2">
+              <div className="p-10 md:w-1/2 anima">
                 <div className="flex flex-wrap w-full bg-gray-100 sm:py-24 py-16 sm:px-10 px-6 relative card">
                   <img
                     alt="gallery"

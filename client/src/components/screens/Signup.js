@@ -51,7 +51,8 @@ const Signup =() => {
         <NavBar/>
         <div className="mycard">
           <div className="card auth-card input-field">
-            <h4>Helping Hands At Home</h4>
+            <h4 className="bold">Helping Hands At Home</h4>
+            <hr/>
             <input
             type="text"
             placeholder="Full Name"
@@ -88,7 +89,7 @@ const Signup =() => {
             value={city}
             onChange={(e)=>setCity(e.target.value)}
             />
-            <button className="btn waves-effect waves-light #64b5f6 blue darken-1"
+            <button className="btn waves-effect waves-light #64b5f6 blue darken-1 signup-button"
             onClick={()=>PostData()}
             >
                 SignUP
