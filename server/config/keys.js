@@ -4,9 +4,3 @@ module.exports = {
     razorIdkey :'rzp_test_5jJTKqUc9XuHf4',
 razorIdSecret:'b7jNHsDzzIfU7inprWx7MbTk'
 }
-// if(process.env.NODE_ENV==='production'){
-//     module.exports = require('./prod')
-// }
-// else{
-//     module.exports = require('./dev')
-// }

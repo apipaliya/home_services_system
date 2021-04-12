@@ -1,4 +1,8 @@
-
+#root,html, body {
+  width: 100% !important;
+  height: 100% !important;
+  background-color: #f8f9fa !important;
+}
 
 a{
   color: black ;
@@ -7,8 +11,12 @@ a{
   font-family: initial;
 }
 
+label{
+  color: #1e88e5 !important;
+}
+
 .bcolor{
-  background-color:darkslategrey  !important;
+  background-color:seagreen  !important;
   margin-left:auto !important;
   margin-right: 1rem !important;
   margin-top: auto !important;

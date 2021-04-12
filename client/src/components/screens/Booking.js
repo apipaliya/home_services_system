@@ -90,8 +90,8 @@ const Booking = () => {
           
           <MDBCol md="10" className="mx-auto">
             <form>
-              <p className="h4 text-center mb-4 my-10">Appointment</p>
-              <label for="street/area" className="grey-text">
+              <p className="h4 text-center mb-4 my-10 blue-text">Appointment</p>
+              <label for="street/area" className="blue-text">
                 Street/Area*
               </label>
               <input
@@ -101,7 +101,7 @@ const Booking = () => {
                 onChange={(e) => setAddress(e.target.value)}
               />
               <br />
-              <label for="street/area" className="grey-text">
+              <label for="street/area" className="blue-text">
                 ZipCode
               </label>
               <input
@@ -111,14 +111,13 @@ const Booking = () => {
                 onChange={(e) => setZipcode(e.target.value)}
               />
               <br />
-              <label for="phone" className="grey-text">
+              <label for="phone" className="blue-text">
                 Mobile No.*
               </label>
               <input type="text" className="form-control"
               value={mobile}
               onChange={(e)=> setMobile(e.target.value)}
               />
-              
             </form>
           </MDBCol>
         </MDBRow>
@@ -129,8 +128,8 @@ const Booking = () => {
           <MDBCol md="10" className="mx-auto">
             <form>
               
-              <p className="h4 text-center mb-4 my-8">Date & Time</p>
-              <label for="birthdaytime">Select Date and Time*</label>
+              <p className="h4 text-center mb-4 my-8 blue-text">Date & Time</p>
+              <label className="birthdaytime blue-text">Select Date and Time*</label>
               <input
                 type="datetime-local"
                 id="daytime"
@@ -139,9 +138,9 @@ const Booking = () => {
                 onChange={(e) => setDateTime(e.target.value)}
               ></input>
 
-              <div className="text-center mt-4">
+              <div className="text-center mt-4 m-auto p-auto">
                 <MDBBtn
-                  color="blue-grey"
+                  color="blue"
                   type="submit"
                   className="rounded"
                   onClick={(e) => senddata(e)}

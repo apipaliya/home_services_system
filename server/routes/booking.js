@@ -5,6 +5,7 @@ const User = mongoose.model("User");
 const UserPro = mongoose.model("UserPro");
 const Admin = mongoose.model("Admin");
 const Booking = mongoose.model("Booking");
+const paymentlog = mongoose.model("paymentlog");
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -44,6 +45,9 @@ router.post("/createBooking", userrequireLogin, (req, res) => {
 router.get("/userData", userrequireLogin, (req, res) => {
   var arr1 = [];
   var _id = req.user._id;
+  if (!req.user) {
+    return res.status(422).json({ error: "required login" });
+  }
   User.findById(_id)
     .then((users) => {
       console.log(users);
@@ -61,7 +65,10 @@ router.get("/verifywork", requireLogin, (req, res) => {
   var array = [];
   var array1 = [];
   var array2 = [];
-  Booking.find({ provider, confirm:0 })
+  if (!req.userPro) {
+    return res.status(422).json({ error: "required login" });
+  }
+  Booking.find({ provider, confirm: 0 })
     .then(async (data) => {
       console.log(data);
       for (i = 0, len = data.length; i < len; i++) {
@@ -92,7 +99,10 @@ router.get("/verifyworkDone", requireLogin, (req, res) => {
   var array = [];
   var array1 = [];
   var array2 = [];
-  Booking.find({ provider,confirm:1,paymentStatus:0,visit:0 })
+  if (!req.userPro) {
+    return res.status(422).json({ error: "required login" });
+  }
+  Booking.find({ provider, confirm: 1, paymentStatus: 0, visit: 0 })
     .then(async (data) => {
       console.log(data);
       for (i = 0, len = data.length; i < len; i++) {
@@ -123,7 +133,10 @@ router.get("/workDone", requireLogin, (req, res) => {
   var array = [];
   var array1 = [];
   var array2 = [];
-  Booking.find({ provider, paymentStatus: 1, visit: 1 })
+  if (!req.userPro) {
+    return res.status(422).json({ error: "required login" });
+  }
+  Booking.find({ provider, visit: 1 ,confirm:1})
     .then(async (data) => {
       console.log(data);
       for (i = 0, len = data.length; i < len; i++) {
@@ -132,8 +145,9 @@ router.get("/workDone", requireLogin, (req, res) => {
           dateTime: data[i].dateTime,
           address: data[i].address,
           zipcode: data[i].zipcode,
-          payamount:data[i].payamount,
-          description:data[i].description
+          payamount: data[i].payamount,
+          description: data[i].description,
+          paymentStatus: data[i].paymentStatus,
         };
         array1.push(d1);
         var sid = data[i].bookedBy;
@@ -187,13 +201,16 @@ router.post("/denyBooking", userrequireLogin, (req, res) => {
     .catch((err) => console.log(err));
 });
 
-router.get("/userworkDone", userrequireLogin, (req, res) => {
-  console.log("userworkDone");
+router.get("/userAppointments", userrequireLogin, (req, res) => {
+  console.log("userAppointments");
   var bookedBy = req.user._id;
   var array = [];
   var array1 = [];
   var array2 = [];
-  Booking.find({ bookedBy, paymentStatus: 0, visit: 0,confirm:1 })
+  if (!req.user) {
+    return res.status(422).json({ error: "required login" });
+  }
+  Booking.find({ bookedBy, paymentStatus: 0, visit: 0, confirm: 1 })
     .then(async (data) => {
       for (i = 0, len = data.length; i < len; i++) {
         var d1 = {
@@ -215,11 +232,82 @@ router.get("/userworkDone", userrequireLogin, (req, res) => {
     });
 });
 
+router.get("/userworkDone", userrequireLogin, (req, res) => {
+  console.log("userworkDone");
+  var bookedBy = req.user._id;
+  var array = [];
+  var array1 = [];
+  var array2 = [];
+  if (!req.user) {
+    return res.status(422).json({ error: "required login" });
+  }
+  Booking.find({ bookedBy, visit: 1, confirm: 1 ,paymentStatus:1})
+    .then(async (data) => {
+      for (i = 0, len = data.length; i < len; i++) {
+        var d1 = {
+          _id: data[i]._id,
+          dateTime: data[i].dateTime,
+          address: data[i].address,
+          payamount: data[i].payamount,
+          description: data[i].description,
+          paymentStatus: data[i].paymentStatus,
+        };
+        array1.push(d1);
+        var sid = data[i].provider;
+        var data1 = await UserPro.findById(sid).exec();
+        array.push(data1);
+      }
+      array2.push(array);
+      array2.push(array1);
+      res.json(array2);
+      console.log(array2);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.get("/transaction", adminrequireLogin, (req, res) => {
+  console.log("transaction");
+  var array = [];
+  var array1 = [];
+  var array2 = [];
+  if (!req.admin) {
+    return res.status(422).json({ error: "required login" });
+  }
+  paymentlog
+    .find()
+    .then(async (data) => {
+      for (i = 0, len = data.length; i < len; i++) {
+        var d1 = {
+          paymentid: data[i].paymentid,
+          date: data[i].date,
+          senderemail: data[i].senderemail,
+          receiveremail: data[i].receiveremail,
+          bookingid: data[i].bookingid,
+          Amount: data[i].Amount,
+          paymentstatus: data[i].paymentstatus,
+        };
+        array1.push(d1);
+        var sid = data[i].bookingid;
+        var data1 = await Booking.findById(sid).exec();
+        array.push(data1);
+      }
+      array2.push(array);
+      array2.push(array1);
+      res.json(array2);
+      console.log(array2);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 router.post("/workSuccess", userrequireLogin, (req, res) => {
-  const { _id,payamount,description } = req.body;
+  const { _id } = req.body;
   Booking.findOneAndUpdate(
     { _id },
-    { $set: { visit: 1 ,payamount,description,paymentStatus:1} },
+    { $set: { visit: 1, payamount, description, paymentStatus: 1 } },
     { new: true },
     (err, doc) => {
       if (err) {
@@ -261,13 +349,14 @@ router.post("/feedbackData", userrequireLogin, async (req, res) => {
     return res.status(422).json({ error: "Plase add all the fields" });
   }
 
-try{let userPro = await UserPro.findById(professionalsid);
-  // console.log(userPro);
-  rating =
-    (userPro.rating * userPro.review.length + rating) /
-    (userPro.review.length + 1);
-  review = [...userPro.review, review];}
-  catch (err) {
+  try {
+    let userPro = await UserPro.findById(professionalsid);
+    // console.log(userPro);
+    rating =
+      (userPro.rating * userPro.review.length + rating) /
+      (userPro.review.length + 1);
+    review = [...userPro.review, review];
+  } catch (err) {
     console.log(err);
   }
   UserPro.findOneAndUpdate(

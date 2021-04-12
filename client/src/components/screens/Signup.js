@@ -89,12 +89,16 @@ const Signup =() => {
             value={city}
             onChange={(e)=>setCity(e.target.value)}
             />
+<<<<<<< HEAD
             <button className="btn waves-effect waves-light #64b5f6 blue darken-1 signup-button"
+=======
+            <button className="btn waves-effect waves-light text-white blue darken-1 p-auto"
+>>>>>>> be68ce15ae7d9f1a8c70d7a4a7fd0a3d266ccd4c
             onClick={()=>PostData()}
             >
                 SignUP
             </button>
-            <h5>
+            <h5 className='mt-2'>
                 <Link to="/login">Already have an account ?</Link>
             </h5>
     

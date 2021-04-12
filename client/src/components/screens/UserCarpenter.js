@@ -9,10 +9,9 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import { makeStyles } from "@material-ui/core/styles";
 import M from "materialize-css";
 import {
-  MDBBtn,
+ 
   MDBRow,
   MDBCard,
   MDBCardBody,
@@ -23,20 +22,7 @@ import {
 } from "mdbreact";
 
 const UserCarpenter = () => {
-  const useStyles = makeStyles((theme) => ({
-    modal: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    paper: {
-      backgroundColor: theme.palette.background.paper,
-      border: "2px solid #000",
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
-    },
-  }));
-
+  
   const history = useHistory();
 
   const [open, setOpen] = React.useState(false);
@@ -65,7 +51,7 @@ const UserCarpenter = () => {
       city: "",
       _id: "",
       rating: "",
-      review: "",
+      review: [],
     },
   ]);
 
@@ -94,7 +80,7 @@ const UserCarpenter = () => {
   return (
     <>
       <UserNavBar />
-      <MDBRow className="m-auto" style={{ backgroundColor: "#f2f2f2" }}>
+      <MDBRow className="m-auto" >
         {professionals.map((pro, index) => {
           return (
             <>
@@ -118,7 +104,7 @@ const UserCarpenter = () => {
                         margin: "auto",
                         overflow: "hidden",
                       }}
-                      src={pro.image}
+                      src={pro.image} 
                       waves
                     />
                     <MDBCardBody>
@@ -188,7 +174,7 @@ const UserCarpenter = () => {
                           </DialogTitle>
                           <DialogContent>
                             <DialogContentText style={{ color: "black" }}>
-                              {pro.review}
+                              {pro.review.map((m)=><ul> <li> -&gt; {m} </li> </ul>)}
                             </DialogContentText>
                           </DialogContent>
                           <DialogActions>

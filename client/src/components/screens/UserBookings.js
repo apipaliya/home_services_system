@@ -7,10 +7,13 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import AdminNavbar from "./AdminNavbar";
+
 import DoneOutlineIcon from "@material-ui/icons/DoneOutline";
 import IconButton from "@material-ui/core/IconButton";
+import Button from "@material-ui/core/Button";
+import CancelIcon from "@material-ui/icons/Cancel";
 import { useHistory } from "react-router";
+import UserNavBar from "./UserNavbar";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -36,22 +39,32 @@ const useStyles = makeStyles({
   },
 });
 
-const AdminContact = () => {
-
+const UserBookings = () => {
   const history = useHistory();
   const classes = useStyles();
 
   const [data, setdata] = useState([
     {
+      // professional
       name: "",
-      email: "",
-      subject: "",
-      text: "",
+      mobile: "",
+      profession: "",
+      city: "",
+      _id: "",
+    },
+  ]);
+  const [data1, setdata1] = useState([
+    {
+      address: "",
+      dateTime: "",
+      zipcode: "",
+      provider: "",
+      _id: "",
     },
   ]);
 
   useEffect(() => {
-    fetch("/contactRemaining", {
+    fetch("/userAppointments", {
       method: "get",
       headers: {
         "Content-Type": "application/json",
@@ -62,10 +75,10 @@ const AdminContact = () => {
       .then((datadetail) => {
         if (datadetail.error) {
           console.log(datadetail.error);
-          history.push("/adminLogin")
+          history.push("/login");
         } else {
-          console.log(datadetail);
-          setdata(datadetail);
+          setdata(datadetail[0]);
+          setdata1(datadetail[1]);
         }
       })
       .catch((err) => {
@@ -75,7 +88,8 @@ const AdminContact = () => {
 
   return (
     <>
-      <AdminNavbar />
+      <UserNavBar />
+
       <br />
       <div className="content">
         <div className="container-fluid">
@@ -85,44 +99,81 @@ const AdminContact = () => {
                 <div
                   class="h4 card-header"
                   style={{
+                    
                     backgroundColor: "#2196f3",
                     color: "white",
-                    borderRadius: "0.50rem",
-                    fontFamily: "Roboto !important",
+                    borderRadius:"0.50rem",
+                    fontFamily: "Roboto !important"
                   }}
                 >
-                  <p className="m-auto text-center">Contact Details</p>
+                  <p className="m-auto text-center">Your Appointments</p>
                 </div>
-              </div>
-              <div className="card">
+                </div>
+                <div className="card">
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell>Name</StyledTableCell>
-              <StyledTableCell align="right">Email</StyledTableCell>
-              <StyledTableCell align="right">Subject</StyledTableCell>
-              <StyledTableCell align="right">Message</StyledTableCell>
-              <StyledTableCell align="center">Progress</StyledTableCell>
+              <StyledTableCell align="right">Profession</StyledTableCell>
+              <StyledTableCell align="right">Mobile No.</StyledTableCell>
+              <StyledTableCell align="right">Date & Time</StyledTableCell>
+              <StyledTableCell align="right">Address</StyledTableCell>
+              <StyledTableCell align="center">Done</StyledTableCell>
+              <StyledTableCell align="center">Cancel</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((data, index) => (
+            {data1.map((data1, index) => (
               <StyledTableRow key={index}>
-                <StyledTableCell component="th" scope="row">
-                  {data.name}
+                {data.length !== 0 && (
+                  <StyledTableCell component="th" scope="row">
+                    {data[index].name}
+                  </StyledTableCell>
+                )}
+                {data.length !== 0 && (
+                  <StyledTableCell align="right">
+                    {data[index].profession}
+                  </StyledTableCell>
+                )}
+                {data.length !== 0 && (
+                  <StyledTableCell align="right">
+                    {data[index].mobile}
+                  </StyledTableCell>
+                )}
+                <StyledTableCell align="right">
+                  {data1.dateTime}
                 </StyledTableCell>
-                <StyledTableCell align="right">{data.email}</StyledTableCell>
-                <StyledTableCell align="right">{data.subject}</StyledTableCell>
-                <StyledTableCell align="right">{data.text}</StyledTableCell>
-               
+                <StyledTableCell align="right">{data1.address}</StyledTableCell>
+                
                 <StyledTableCell align="center">
-                  <IconButton
+                  <Button
                     color="primary"
                     type="submit"
+                    variant="contained"
+                    onClick={(e) =>{
+                      e.preventDefault();
+                      var p1 =  {_pid:data[index]._id} ;
+                      var b1 =  {_bid:data1._id} ;
+                      console.log("p1", p1);
+                      console.log("b1", b1);
+                      history.push({
+                        pathname: "/userPayment",
+                        state: { p1 ,b1},
+                      });
+                    }}
+                  >
+                    Payment
+                  </Button>
+                </StyledTableCell>
+
+                <StyledTableCell align="center">
+                  <IconButton
+                    type="submit"
+                    style={{color:"red"}}
                     onClick={(e) => {
                       e.preventDefault();
-                      fetch("/contactDone", {
+                      fetch("/bookingCancel", {
                         method: "post",
                         headers: {
                           "Content-Type": "application/json",
@@ -130,34 +181,33 @@ const AdminContact = () => {
                             "Bearer " + localStorage.getItem("jwt"),
                         },
                         body: JSON.stringify({
-                          email: data.email,
+                          _id: data1._id,
                         }),
                       })
                         .then((res) => {
-                            res.json()
-                            window.location.reload();
-                            })
+                          res.json();
+                          window.location.reload();
+                        })
                         .catch((err) => {
                           console.log(err);
                         });
                     }}
                   >
-                    <DoneOutlineIcon />
+                    <CancelIcon />
                   </IconButton>
-
                 </StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-     </div>
-     </div>
-     </div>
-     </div>
-     </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
     </>
   );
 };
 
-export default AdminContact;
+export default UserBookings;

@@ -43,7 +43,7 @@ const Service = () => {
                     </p>
                     <Link
                       className="mt-3 text-blue-500 inline-flex items-center"
-                      to="/carpenter"
+                      to="/usercarpenter"
                     >
                       Explore
                       <svg
@@ -77,7 +77,7 @@ const Service = () => {
                     </p>
                     <Link
                       className="mt-3 text-blue-500 inline-flex items-center "
-                      to="/electrician"
+                      to="/userelectrician"
                     >
                       Explore
                       <svg
@@ -111,7 +111,7 @@ const Service = () => {
                     </p>
                     <Link
                       className="mt-3 text-blue-500 inline-flex items-center"
-                      to="/plumber"
+                      to="/userplumber"
                     >
                       Explore
                       <svg
@@ -146,7 +146,7 @@ const Service = () => {
                     </p>
                     <Link
                       className="mt-3 text-blue-500 inline-flex items-center"
-                      to="/pestcontrol"
+                      to="/userpestcontrol"
                     >
                       Explore
                       <svg

@@ -9,7 +9,6 @@ const User = mongoose.model("User");
 const UserPro = mongoose.model("UserPro");
 const Booking = mongoose.model("Booking");
 const paymentlog = mongoose.model("paymentlog");
-const crypto = require("crypto");
 const { JWT_SECRET } = require("../config/keys");
 const requireLogin = require("../middleware/requireLogin");
 const adminrequireLogin = require("../middleware/adminrequireLogin");
@@ -106,6 +105,7 @@ router.post("/verification", async (req, res) => {
           $set: {
             payamount: amo,
             paymentStatus: 1,
+            visit:1
           },
         },
         { new: true },

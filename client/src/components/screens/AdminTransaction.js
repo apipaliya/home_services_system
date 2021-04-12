@@ -1,21 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
-import Button from "@material-ui/core/Button";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import ProNavBar from "./ProNavbar";
 import Badge from "react-bootstrap/Badge";
-import { useHistory } from "react-router-dom";
-import Dialog from "@material-ui/core/Dialog";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
+import AdminNavbar from "./AdminNavbar";
+import { useHistory } from "react-router";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -41,45 +35,30 @@ const useStyles = makeStyles({
   },
 });
 
-const ProHistory = () => {
-  const classes = useStyles();
+const AdminTransaction = () => {
   const history = useHistory();
-  const [open, setOpen] = React.useState(false);
-  const [payamount, setPayamount] = React.useState("");
-  const [description, setDescription] = React.useState("");
-  const [paymentStatus, setPaymentstatus] = React.useState("");
+  const classes = useStyles();
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const [data, setdata] = useState([
-    {
-      // user
-      name: "",
-      mobile: "",
-      city: "",
-      _id: "",
-    },
-  ]);
   const [data1, setdata1] = useState([
     {
-      address: "",
-      dateTime: "",
-      zipcode: "",
-      bookedBy: "",
-      _id: "",
+      paymentid: "",
+      Amount: "",
+      paymentstatus: "",
+      order_id: "",
+      bookingid: "",
+      date: "",
+      senderemail: "",
+      receiveremail: "",
+    },
+  ]);
+  const [data, setdata] = useState([
+    {
       description: "",
-      payamount: "",
-      paymentStatus: "",
     },
   ]);
 
   useEffect(() => {
-    fetch("/workDone", {
+    fetch("/transaction", {
       method: "get",
       headers: {
         "Content-Type": "application/json",
@@ -90,11 +69,12 @@ const ProHistory = () => {
       .then((datadetail) => {
         if (datadetail.error) {
           console.log(datadetail.error);
-          history.push("/loginpro");
+          history.push("/adminLogin");
         } else {
-          console.log(datadetail);
           setdata(datadetail[0]);
           setdata1(datadetail[1]);
+          console.log(datadetail[0]);
+          console.log(datadetail[1]);
         }
       })
       .catch((err) => {
@@ -104,8 +84,8 @@ const ProHistory = () => {
 
   return (
     <>
-      <ProNavBar />
-      
+      <AdminNavbar />
+
       <br />
       <div className="content">
         <div className="container-fluid">
@@ -113,7 +93,7 @@ const ProHistory = () => {
             <div className="col-md-12">
               <div className="card">
                 <div
-                  className="h4 card-header"
+                  class="h4 card-header"
                   style={{
                     backgroundColor: "#2196f3",
                     color: "white",
@@ -121,7 +101,7 @@ const ProHistory = () => {
                     fontFamily: "Roboto !important",
                   }}
                 >
-                  <p className="m-auto text-center">Work Done</p>
+                  <p className="m-auto text-center">Transaction</p>
                 </div>
               </div>
               <div className="card">
@@ -132,52 +112,63 @@ const ProHistory = () => {
                   >
                     <TableHead>
                       <TableRow>
-                        <StyledTableCell>Customer Name</StyledTableCell>
+                        <StyledTableCell>Payment Id</StyledTableCell>
                         <StyledTableCell align="right">
-                          Mobile No.
+                          User Email
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          Professionals Email
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          Booking Id
                         </StyledTableCell>
                         <StyledTableCell align="right">
                           Date & Time
                         </StyledTableCell>
-                        <StyledTableCell align="right">Address</StyledTableCell>
                         <StyledTableCell align="right">Amount</StyledTableCell>
-                        <StyledTableCell align="right">Description</StyledTableCell>
-                        
+                        <StyledTableCell align="right">
+                          Description
+                        </StyledTableCell>
                         <StyledTableCell align="center">
-                          Payment Status
+                          Payment
                         </StyledTableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
                       {data1.map((data1, index) => (
                         <StyledTableRow key={index}>
-                          {data.length !== 0 && (
+                          {data1.length !== 0 && (
                             <StyledTableCell component="th" scope="row">
-                              {data[index].name}
+                              {data1.paymentid}
                             </StyledTableCell>
                           )}
-                          {data.length !== 0 && (
+                          {data1.length !== 0 && (
                             <StyledTableCell align="right">
-                              {data[index].mobile}
+                              {data1.senderemail}
                             </StyledTableCell>
                           )}
-                          <StyledTableCell align="right">
-                            {data1.dateTime}
-                          </StyledTableCell>
-                          <StyledTableCell align="right">
-                            {data1.address}
-                          </StyledTableCell>
-                          <StyledTableCell align="right">
-                            {data1.payamount}
-                          </StyledTableCell>
-                          {data.length !== 0 && (
+                          {data1.length !== 0 && (
                             <StyledTableCell align="right">
-                              {data1.description}
+                              {data1.receiveremail}
                             </StyledTableCell>
                           )}
+                          {data1.length !== 0 && (
+                            <StyledTableCell align="right">
+                              {data1.bookingid}
+                            </StyledTableCell>
+                          )}
+                          <StyledTableCell align="right">
+                            {data1.date}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {data1.Amount}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {data[index].description}
+                          </StyledTableCell>
 
                           <StyledTableCell align="center">
-                            {data1.paymentStatus ? (
+                            {data1.paymentstatus ? (
                               <h5>
                                 <Badge variant="success">Success</Badge>{" "}
                               </h5>
@@ -201,4 +192,4 @@ const ProHistory = () => {
   );
 };
 
-export default ProHistory;
+export default AdminTransaction;
