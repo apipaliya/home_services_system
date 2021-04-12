@@ -136,7 +136,7 @@ router.get("/workDone", requireLogin, (req, res) => {
   if (!req.userPro) {
     return res.status(422).json({ error: "required login" });
   }
-  Booking.find({ provider, visit: 1 ,confirm:1})
+  Booking.find({ provider, visit: 1 ,confirm:1,paymentStatus:1})
     .then(async (data) => {
       console.log(data);
       for (i = 0, len = data.length; i < len; i++) {
@@ -230,6 +230,27 @@ router.get("/userAppointments", userrequireLogin, (req, res) => {
     .catch((err) => {
       console.log(err);
     });
+});
+
+router.post("/visited", requireLogin, (req, res) => {
+  const { _id } = req.body;
+  console.log(_id);
+  Booking.findOneAndUpdate(
+    { _id },
+    { $set: { visit: 1 } },
+    { new: true },
+    (err, doc) => {
+      if (err) {
+        console.log("Something wrong when updating data!");
+      } else {
+        res.status(200).json(doc);
+      }
+    }
+  )
+    .then((inf) => {
+      // console.log(inf);
+    })
+    .catch((err) => console.log(err));
 });
 
 router.get("/userworkDone", userrequireLogin, (req, res) => {

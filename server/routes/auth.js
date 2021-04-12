@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const User = mongoose.model("User");
 const UserPro = mongoose.model("UserPro");
 const Admin = mongoose.model("Admin");
+const Booking = mongoose.model("Booking");
 const ContactUs = mongoose.model("ContactUs");
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
@@ -163,6 +164,7 @@ router.post("/signuppro", (req, res) => {
           zipcode,
           city,
           address,
+          available:true
         });
 
         user
