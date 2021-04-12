@@ -125,8 +125,7 @@ const ProWork = () => {
                         <StyledTableCell align="right">Address</StyledTableCell>
                         <StyledTableCell align="right">ZipCode</StyledTableCell>
                         <StyledTableCell align="right">City</StyledTableCell>
-                        {/* <StyledTableCell align="center">Accept</StyledTableCell> 
-              <StyledTableCell align="center">Reject</StyledTableCell>  */}
+                        <StyledTableCell align="center">Progress</StyledTableCell> 
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -155,6 +154,37 @@ const ProWork = () => {
                                 {data[index].city}
                               </StyledTableCell>
                             )}
+                            {
+                              data.length !==0 && <StyledTableCell align="center">
+                              <IconButton
+                                type="submit"
+                                style={{ color: "green" }}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  fetch("/visited", {
+                                    method: "post",
+                                    headers: {
+                                      "Content-Type": "application/json",
+                                      Authorization:
+                                        "Bearer " +
+                                        localStorage.getItem("jwt"),
+                                    },
+                                    body: JSON.stringify({
+                                      _id: data1._id,
+                                    }),
+                                  })
+                                    .then((res) => {
+                                      res.json()
+                                      window.location.reload();
+                                    })
+                                    .catch((err) => {
+                                      console.log(err);
+                                    });
+                                }}
+                              >
+                                <DoneOutlineIcon />
+                              </IconButton>
+                            </StyledTableCell>}
                           </StyledTableRow>
                         ))}
                     </TableBody>
