@@ -41,7 +41,7 @@ const useStyles = makeStyles({
   },
 });
 
-const ProHistory = () => {
+const ProPayment = () => {
   const classes = useStyles();
   const history = useHistory();
   const [open, setOpen] = React.useState(false);
@@ -61,7 +61,7 @@ const ProHistory = () => {
       // user
       name: "",
       mobile: "",
-      city: "",
+      email:"",
       _id: "",
     },
   ]);
@@ -69,7 +69,6 @@ const ProHistory = () => {
     {
       address: "",
       dateTime: "",
-      zipcode: "",
       bookedBy: "",
       _id: "",
       description: "",
@@ -79,7 +78,7 @@ const ProHistory = () => {
   ]);
 
   useEffect(() => {
-    fetch("/userPro/workDone", {
+    fetch("/userPro/payment", {
       method: "get",
       headers: {
         "Content-Type": "application/json",
@@ -200,4 +199,4 @@ const ProHistory = () => {
   );
 };
 
-export default ProHistory;
+export default ProPayment;

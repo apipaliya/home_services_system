@@ -193,7 +193,8 @@ router.post("/loginpro", (req, res) => {
   if (!email || !password) {
     return res.status(422).json({ error: "please add email or password" });
   }
-  UserPro.findOne({ email: email }).then((savedUser) => {
+  UserPro.findOne({ email: email })
+  .then((savedUser) => {
     console.log(savedUser);
     if (!savedUser) {
       return res.status(422).json({ error: "Invalid Email or password" });

@@ -127,7 +127,7 @@ router.get("/verifyworkDone", requireLogin, (req, res) => {
     });
 });
 
-router.get("/workDone", requireLogin, (req, res) => {
+router.get("/userPro/workDone", requireLogin, (req, res) => {
   var provider = req.userPro._id;
   console.log(provider);
   var array = [];

@@ -119,7 +119,7 @@ const Signuppro = () => {
             >
               <MenuItem value={"Carpenter"}>Carpenter</MenuItem>
               <MenuItem value={"Electrician"}>Electrician</MenuItem>
-              <MenuItem value={"PestControl"}>Pest Control</MenuItem>
+              <MenuItem value={"Pest Control"}>Pest Control</MenuItem>
               <MenuItem value={"Plumber"}>Plumber</MenuItem>
             </Select>
             <FormHelperText>Required</FormHelperText>
