@@ -470,7 +470,7 @@ router.post("/user/reset-password", (req, res) => {
           subject: "password reset",
           html: `
                     <p>You requested for password reset</p>
-                    <h5>click in this <a href="http://localhost:3000/user/reset/${token}">link</a> to reset password</h5>
+                    <h5>click in this <a href="http://localhost:3000/reset/${token}">link</a> to reset password</h5>
                     `,
         };
         transporter.sendMail(mailOptions, function (err, res) {
@@ -480,7 +480,6 @@ router.post("/user/reset-password", (req, res) => {
             console.log("here is the res: ", res);
           }
         });
-        res.json("mail send successfully");
         res.json({ message: "check your email" });
       });
     });

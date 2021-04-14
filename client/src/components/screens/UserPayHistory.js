@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
-import Button from "@material-ui/core/Button";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import ProNavBar from "./ProNavbar";
 import Badge from "react-bootstrap/Badge";
-import { useHistory } from "react-router-dom";
-import Dialog from "@material-ui/core/Dialog";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
+import DoneOutlineIcon from "@material-ui/icons/DoneOutline";
+import IconButton from "@material-ui/core/IconButton";
+import Button from "@material-ui/core/Button";
+import CancelIcon from "@material-ui/icons/Cancel";
+import { useHistory } from "react-router";
+import UserNavBar from "./UserNavbar";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -41,42 +39,35 @@ const useStyles = makeStyles({
   },
 });
 
-const ProPayment = () => {
-  const classes = useStyles();
+const UserPayHistory = () => {
   const history = useHistory();
-  const [open, setOpen] = React.useState(false);
-  const [payamount, setPayamount] = React.useState("");
-  const [description, setDescription] = React.useState("");
-  const [paymentStatus, setPaymentstatus] = React.useState("");
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const classes = useStyles();
 
   const [data, setdata] = useState([
     {
-      // user
+      // professional
       name: "",
-      email: "",
+      mobile: "",
+      profession: "",
       city: "",
       _id: "",
     },
   ]);
-
   const [data1, setdata1] = useState([
     {
-      description: "",
-      payamount: "",
       address: "",
+      dateTime: "",
+      zipcode: "",
+      payamount: "",
+      description: "",
       paymentStatus: "",
+      provider: "",
+      _id: "",
     },
   ]);
 
   useEffect(() => {
-    fetch("/userPro/transaction", {
+    fetch("/userworkDone", {
       method: "get",
       headers: {
         "Content-Type": "application/json",
@@ -87,9 +78,8 @@ const ProPayment = () => {
       .then((datadetail) => {
         if (datadetail.error) {
           console.log(datadetail.error);
-          history.push("/loginpro");
+          history.push("/login");
         } else {
-          console.log(datadetail);
           setdata(datadetail[0]);
           setdata1(datadetail[1]);
         }
@@ -101,7 +91,8 @@ const ProPayment = () => {
 
   return (
     <>
-      <ProNavBar />
+      <UserNavBar />
+
       <br />
       <div className="content">
         <div className="container-fluid">
@@ -117,7 +108,7 @@ const ProPayment = () => {
                     fontFamily: "Roboto !important",
                   }}
                 >
-                  <p className="m-auto text-center">Pending Transaction</p>
+                  <p className="m-auto text-center">Completed Appointments</p>
                 </div>
               </div>
               <div className="card">
@@ -128,49 +119,73 @@ const ProPayment = () => {
                   >
                     <TableHead>
                       <TableRow>
-                        <StyledTableCell>Customer Name</StyledTableCell>
+                        <StyledTableCell>Name</StyledTableCell>
                         <StyledTableCell align="right">
-                          Email id
+                          Profession
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          Mobile No.
                         </StyledTableCell>
                         <StyledTableCell align="right">
                           Date & Time
                         </StyledTableCell>
                         <StyledTableCell align="right">Address</StyledTableCell>
-                        <StyledTableCell align="right">ZipCode</StyledTableCell>
+                        <StyledTableCell align="right">Amount</StyledTableCell>
+                        <StyledTableCell align="right">
+                          Description
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          Payment
+                        </StyledTableCell>
                         <StyledTableCell align="center">
                           Status
                         </StyledTableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {data1.length !== 0 &&
-                        data1.map((data1, index) => (
-                          <StyledTableRow key={index}>
+                      {data1.map((data1, index) => (
+                        <StyledTableRow key={index}>
+                          {data.length !== 0 && (
                             <StyledTableCell component="th" scope="row">
-                              {data.length !== 0 && data[index].name}
+                              {data[index].name}
                             </StyledTableCell>
-                            {data.length !== 0 && (
-                              <StyledTableCell align="right">
-                                {data[index].email}
-                              </StyledTableCell>
-                            )}
+                          )}
+                          {data.length !== 0 && (
                             <StyledTableCell align="right">
-                              {data1.dateTime}
+                              {data[index].profession}
                             </StyledTableCell>
+                          )}
+                          {data.length !== 0 && (
                             <StyledTableCell align="right">
-                              {data1.address}
+                              {data[index].mobile}
                             </StyledTableCell>
-                            <StyledTableCell align="right">
-                              {data1.zipcode}
-                            </StyledTableCell>
-
-                            <StyledTableCell align="center">
+                          )}
+                          <StyledTableCell align="right">
+                            {data1.dateTime}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {data1.address}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {data1.payamount}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {data1.description}
+                          </StyledTableCell>
+                            
+                          <StyledTableCell align="center">
+                            {data1.paymentStatus ? (
                               <h5>
-                                <Badge variant="dark">Pending</Badge>{" "}
+                                <Badge variant="success">Success</Badge>{" "}
                               </h5>
-                            </StyledTableCell>
-                          </StyledTableRow>
-                        ))}
+                            ) : (
+                              <h5>
+                                <Badge variant="danger">Failed</Badge>{" "}
+                              </h5>
+                            )}
+                          </StyledTableCell>
+                        </StyledTableRow>
+                      ))}
                     </TableBody>
                   </Table>
                 </TableContainer>
@@ -183,4 +198,4 @@ const ProPayment = () => {
   );
 };
 
-export default ProPayment;
+export default UserPayHistory;

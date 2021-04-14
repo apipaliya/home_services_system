@@ -9,6 +9,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import ProNavBar from "./ProNavbar";
 import DoneOutlineIcon from "@material-ui/icons/DoneOutline";
+import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import CancelIcon from "@material-ui/icons/Cancel";
 import Footer from "../Footer";
@@ -62,7 +63,7 @@ const ProWork = () => {
   ]);
 
   useEffect(() => {
-    fetch("/verifyworkDone", {
+    fetch("/userpro/todo", {
       method: "get",
       headers: {
         "Content-Type": "application/json",
@@ -125,7 +126,7 @@ const ProWork = () => {
                         <StyledTableCell align="right">Address</StyledTableCell>
                         <StyledTableCell align="right">ZipCode</StyledTableCell>
                         <StyledTableCell align="right">City</StyledTableCell>
-                        <StyledTableCell align="center">Progress</StyledTableCell> 
+                       
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -154,37 +155,8 @@ const ProWork = () => {
                                 {data[index].city}
                               </StyledTableCell>
                             )}
-                            {
-                              data.length !==0 && <StyledTableCell align="center">
-                              <IconButton
-                                type="submit"
-                                style={{ color: "green" }}
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  fetch("/visited", {
-                                    method: "post",
-                                    headers: {
-                                      "Content-Type": "application/json",
-                                      Authorization:
-                                        "Bearer " +
-                                        localStorage.getItem("jwt"),
-                                    },
-                                    body: JSON.stringify({
-                                      _id: data1._id,
-                                    }),
-                                  })
-                                    .then((res) => {
-                                      res.json()
-                                      window.location.reload();
-                                    })
-                                    .catch((err) => {
-                                      console.log(err);
-                                    });
-                                }}
-                              >
-                                <DoneOutlineIcon />
-                              </IconButton>
-                            </StyledTableCell>}
+
+                            
                           </StyledTableRow>
                         ))}
                     </TableBody>

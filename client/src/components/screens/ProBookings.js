@@ -11,8 +11,8 @@ import ProNavBar from "./ProNavbar";
 import DoneOutlineIcon from "@material-ui/icons/DoneOutline";
 import IconButton from "@material-ui/core/IconButton";
 import CancelIcon from "@material-ui/icons/Cancel";
-import Footer from "../Footer";
 import { useHistory } from "react-router";
+import M from 'materialize-css';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -210,6 +210,10 @@ const ProBookings = () => {
                                                 console.log(datadetail.error);
                                               } else {
                                                 console.log(datadetail);
+                                                M.toast({
+                                                  html: "Mail sent successfully",
+                                                  classes: "#43a047 green darken-1",
+                                                });
                                                 window.location.reload();
                                               }
                                             })
@@ -271,6 +275,10 @@ const ProBookings = () => {
                                                 console.log(datadetail.error);
                                               } else {
                                                 console.log(datadetail);
+                                                M.toast({
+                                                  html: "Mail sent successfully",
+                                                  classes: "#43a047 green darken-1",
+                                                });
                                                 window.location.reload();
                                               }
                                             })

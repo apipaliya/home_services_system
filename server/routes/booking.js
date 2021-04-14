@@ -93,7 +93,7 @@ router.get("/verifywork", requireLogin, (req, res) => {
     });
 });
 
-router.get("/verifyworkDone", requireLogin, (req, res) => {
+router.get("/userpro/todo", requireLogin, (req, res) => {
   var provider = req.userPro._id;
   console.log(provider);
   var array = [];
@@ -232,6 +232,40 @@ router.get("/userAppointments", userrequireLogin, (req, res) => {
     });
 });
 
+router.get("/user/transaction", userrequireLogin, (req, res) => {
+  console.log("/user/transaction");
+  var bookedBy = req.user._id;
+  var array = [];
+  var array1 = [];
+  var array2 = [];
+  if (!req.user) {
+    return res.status(422).json({ error: "required login" });
+  }
+  Booking.find({ bookedBy, paymentStatus: 0, visit: 1, confirm: 1 })
+    .then(async (data) => {
+      for (i = 0, len = data.length; i < len; i++) {
+        var d1 = {
+          _id: data[i]._id,
+          dateTime: data[i].dateTime,
+          address: data[i].address,
+          payamount: data[i].payamount,
+          description: data[i].description
+        };
+        array1.push(d1);
+        var sid = data[i].provider;
+        var data1 = await UserPro.findById(sid).exec();
+        array.push(data1);
+      }
+      array2.push(array);
+      array2.push(array1);
+      res.json(array2);
+      console.log(array2);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 router.post("/visited", requireLogin, (req, res) => {
   const { _id } = req.body;
   console.log(_id);
@@ -288,6 +322,41 @@ router.get("/userworkDone", userrequireLogin, (req, res) => {
     });
 });
 
+router.get("/userPro/transaction", requireLogin, (req, res) => {
+  var provider = req.userPro._id;
+  console.log(provider);
+  var array = [];
+  var array1 = [];
+  var array2 = [];
+  if (!req.userPro) {
+    return res.status(422).json({ error: "required login" });
+  }
+  Booking.find({ provider, confirm: 1, paymentStatus: 0, visit: 1 })
+    .then(async (data) => {
+      console.log(data);
+      for (i = 0, len = data.length; i < len; i++) {
+        var d1 = {
+          _id: data[i]._id,
+          dateTime: data[i].dateTime,
+          address: data[i].address,
+          zipcode: data[i].zipcode,
+          paymentStatus: data[i].paymentStatus
+        };
+        array1.push(d1);
+        var sid = data[i].bookedBy;
+        var data1 = await User.findById(sid).exec();
+        array.push(data1);
+      }
+
+      array2.push(array);
+      array2.push(array1);
+      res.json(array2);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 router.get("/transaction", adminrequireLogin, (req, res) => {
   console.log("transaction");
   var array = [];
@@ -324,11 +393,13 @@ router.get("/transaction", adminrequireLogin, (req, res) => {
     });
 });
 
-router.post("/workSuccess", userrequireLogin, (req, res) => {
-  const { _id } = req.body;
+router.post("/workSuccess", requireLogin, (req, res) => {
+  console.log("worksuccess")
+  const { _id,payamount,description } = req.body;
+  console.log(_id);
   Booking.findOneAndUpdate(
     { _id },
-    { $set: { visit: 1, payamount, description, paymentStatus: 1 } },
+    { $set: { visit: 1, payamount, description, paymentStatus: 0 } },
     { new: true },
     (err, doc) => {
       if (err) {

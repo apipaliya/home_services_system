@@ -28,13 +28,15 @@ import AdminContact from './components/screens/AdminContact';
 import UserHistory from './components/screens/UserHistory';
 import Feedback from './components/screens/Feedback';
 import ProBookings from './components/screens/ProBookings';
-import UserPayment from './components/screens/UserPayment';
 import UserBookings from './components/screens/UserBookings';
 import UserReset from './components/screens/UserReset';
-import UserNewpassword from './components/screens/UserNewpassword';
+import Newpassword from './components/screens/UserNewpassword';
 import ProNewpassword from './components/screens/ProNewpassword';
 import ProReset from './components/screens/ProReset';
 import AdminTransaction from './components/screens/AdminTransaction';
+import ProPayment from './components/screens/ProPayment';
+import Payment from './components/screens/Payment';
+import UserPayment from './components/screens/UserPayment';
 
 export const UserContext = createContext()
 
@@ -120,19 +122,25 @@ const Routing = () => {
       <Route path="/proworkHistory">
         <ProHistory />
       </Route>
+      <Route path="/proTransaction">
+        <ProPayment />
+      </Route>
       <Route path="/userPayment">
         <UserPayment />
+      </Route>
+      <Route path="/payment">
+        <Payment />
       </Route>
       <Route exact path="/user/reset">
         <UserReset />
       </Route>
-      <Route path="user/reset/:token">
-        <UserNewpassword />
+      <Route path="/reset/:token">
+        <Newpassword />
       </Route>
       <Route exact path="/userpro/reset">
         <ProReset />
       </Route>
-      <Route path="userpro/reset/:token">
+      <Route path="/userpro/reset/:token">
         <ProNewpassword />
       </Route>
       <Route exact path="/booking">

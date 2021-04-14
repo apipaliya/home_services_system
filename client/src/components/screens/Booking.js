@@ -51,7 +51,7 @@ const Booking = () => {
             html: "Update Details successfully",
             classes: "#43a047 green darken-1",
           });
-          history.push("/payment");
+          history.push("/userBookings");
         }
       })
       .catch((err) => {
