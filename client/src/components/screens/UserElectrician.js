@@ -11,7 +11,6 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import M from "materialize-css";
 import {
- 
   MDBRow,
   MDBCard,
   MDBCardBody,
@@ -22,13 +21,16 @@ import {
 } from "mdbreact";
 
 const UserElectrician = () => {
-  
   const history = useHistory();
 
   const [open, setOpen] = React.useState(false);
 
-  const handleClickToOpen = () => {
+  let [rev, setReview] = React.useState();
+
+  const handleClickToOpen = (revi) => {
     setOpen(true);
+    setReview(revi);
+    console.log(revi);
   };
 
   const handleToClose = () => {
@@ -80,7 +82,35 @@ const UserElectrician = () => {
   return (
     <>
       <UserNavBar />
-      <MDBRow className="m-auto" >
+      <MDBRow className="m-auto">
+        <Dialog open={open} onClose={handleToClose}>
+          <DialogTitle
+            style={{
+              color: "blue",
+              margin: "auto",
+              fontSize: "18px !important",
+            }}
+          >
+            <b>Review</b>
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText style={{ color: "black" }}>
+              {rev &&
+                rev.map((m) => (
+                  <ul>
+                    {" "}
+                    <li> -&gt; {m} </li>{" "}
+                  </ul>
+                ))}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleToClose} color="primary" autoFocus>
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
+        ;
         {professionals.map((pro, index) => {
           return (
             <>
@@ -104,7 +134,7 @@ const UserElectrician = () => {
                         margin: "auto",
                         overflow: "hidden",
                       }}
-                      src={pro.image} 
+                      src={pro.image}
                       waves
                     />
                     <MDBCardBody>
@@ -130,22 +160,25 @@ const UserElectrician = () => {
                       </MDBCardText>
                       <div className="flex">
                         <span className=" left text-center py-2">
-                        <ReactStars
-                          count={5}
-                          isHalf={true}
-                          size={36}
-                          edit={false}
-                          value={pro.rating}
-                          activeColor="#fbcd0a"
-                        />
+                          <ReactStars
+                            count={5}
+                            isHalf={true}
+                            size={36}
+                            edit={false}
+                            value={pro.rating}
+                            activeColor="#fbcd0a"
+                          />
+                          {/* {console.log()} */}
                         </span>
 
                         {pro.review.length !== 0 && (
                           <Button
-                          className="flex m-auto text-white border-0 py-auto px-auto focus:outline-none rounded "
+                            className="flex m-auto text-white border-0 py-auto px-auto focus:outline-none rounded "
                             variant="contained"
                             color="primary"
-                            onClick={handleClickToOpen}
+                            onClick={() => {
+                              handleClickToOpen(pro.review);
+                            }}
                           >
                             Review
                           </Button>
@@ -153,7 +186,7 @@ const UserElectrician = () => {
 
                         {pro.review.length === 0 && (
                           <Button
-                          className="flex m-auto text-white border-0 py-auto px-auto focus:outline-none rounded "
+                            className="flex m-auto text-white border-0 py-auto px-auto focus:outline-none rounded "
                             variant="contained"
                             color="primary"
                             onClick={noData}
@@ -162,53 +195,35 @@ const UserElectrician = () => {
                           </Button>
                         )}
 
-                        <Dialog open={open} onClose={handleToClose}>
-                          <DialogTitle
-                            style={{
-                              color: "blue",
-                              margin: "auto",
-                              fontSize: "18px !important",
-                            }}
-                          >
-                            <b>Review</b>
-                          </DialogTitle>
-                          <DialogContent>
-                            <DialogContentText style={{ color: "black" }}>
-                              {pro.review.map((m)=><ul> <li> -&gt; {m} </li> </ul>)}
-                            </DialogContentText>
-                          </DialogContent>
-                          <DialogActions>
-                            <Button
-                              onClick={handleToClose}
-                              color="primary"
-                              autoFocus
-                            >
-                              Close
-                            </Button>
-                          </DialogActions>
-                        </Dialog>
-                      </div>
+                    </div>
                       <div className="flex">
                         <span className="font-medium text-2xl text-black left text-center py-2">
-                         Price:{pro.charge}&nbsp;&#8377;
+                          Price:{pro.charge}&nbsp;&#8377;
                         </span>
                         <Button
                           className="bcolor flex text-white border-0 py-auto px-auto focus:outline-none rounded "
-                            variant="contained"
-                           
-                            onClick={(e) => {
-                              var data = { _id: pro._id };
-                              history.push({
-                                pathname: "/booking",
-                                state: { data },
-                              });
-                            }}
-                          >
-                            Book
-                          </Button>
+                          variant="contained"
+                          onClick={(e) => {
+                            var data = { _id: pro._id };
+                            history.push({
+                              pathname: "/booking",
+                              state: { data },
+                            });
+                          }}
+                        >
+                          Book
+                        </Button>
                       </div>
                       <MDBCardText>
-                      <p style={{color:'red',fontSize:'small',margin:'auto'}}>(note:here mention is only visiting charge)</p>
+                        <p
+                          style={{
+                            color: "red",
+                            fontSize: "small",
+                            margin: "auto",
+                          }}
+                        >
+                          (note:here mention is only visiting charge)
+                        </p>
                       </MDBCardText>
                     </MDBCardBody>
                   </MDBCard>

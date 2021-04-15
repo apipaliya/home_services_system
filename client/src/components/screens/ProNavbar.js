@@ -10,10 +10,19 @@ import {
   MDBDropdown,
   MDBDropdownToggle,
   MDBDropdownMenu,
+  MDBIcon,
   MDBDropdownItem,
 } from "mdbreact";
 
+var arr; 
+const user = JSON.parse(localStorage.getItem("user"));
+console.log(user);
+if (user) {
+  arr = user.name.split(" ", 1);
+}
+
 class ProNavBar extends Component {
+
   state = {
     isOpen: false,
   };
@@ -35,10 +44,27 @@ class ProNavBar extends Component {
         </MDBNavbarBrand>
         <MDBNavbarToggler onClick={this.toggleCollapse} />
         <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
-          <MDBNavbarNav right>
-            <MDBNavItem>
-              <MDBNavLink to="/profilepro">Profile</MDBNavLink>
+          <MDBNavbarNav right style={{marginTop:'1rem'}}>
+          <MDBNavItem>
+              <MDBDropdown>
+                <MDBDropdownToggle nav caret>
+                  <div className="d-md-inline d-sm-inline d-inline">
+                  <MDBIcon icon="user-tie" /> &nbsp;{arr}
+                  </div>
+                </MDBDropdownToggle>
+                <MDBDropdownMenu className="dropdown-default">
+                  <MDBDropdownItem href="/profilepro">Profile</MDBDropdownItem>
+                
+                  <MDBDropdownItem href="##" onClick={() => {
+                  localStorage.clear();
+                  window.location.href = "/";
+                }}>LogOut</MDBDropdownItem>
+                </MDBDropdownMenu>
+              </MDBDropdown>
             </MDBNavItem>
+            {/* <MDBNavItem>
+              <MDBNavLink to="/profilepro">Profile</MDBNavLink>
+            </MDBNavItem> */}
             <MDBNavItem>
               <MDBDropdown>
                 <MDBDropdownToggle nav caret>
@@ -63,17 +89,7 @@ class ProNavBar extends Component {
             <MDBNavItem>
               <MDBNavLink to="/contactus">Contact Us</MDBNavLink>
             </MDBNavItem>
-            <MDBNavItem>
-              <MDBNavLink
-                to="##"
-                onClick={() => {
-                  localStorage.clear();
-                  window.location.href = "/";
-                }}
-              >
-                Logout
-              </MDBNavLink>
-            </MDBNavItem>
+            
           </MDBNavbarNav>
         </MDBCollapse>
       </MDBNavbar>
