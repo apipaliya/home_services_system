@@ -58,6 +58,9 @@ class ProNavBar extends Component {
               </MDBDropdown>
             </MDBNavItem>
             <MDBNavItem>
+              <MDBNavLink to="/proTransaction">Transaction</MDBNavLink>
+            </MDBNavItem>
+            <MDBNavItem>
               <MDBNavLink to="/contactus">Contact Us</MDBNavLink>
             </MDBNavItem>
             <MDBNavItem>

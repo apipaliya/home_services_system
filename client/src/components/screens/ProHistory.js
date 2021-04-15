@@ -79,7 +79,7 @@ const ProHistory = () => {
   ]);
 
   useEffect(() => {
-    fetch("/workDone", {
+    fetch("/userPro/workDone", {
       method: "get",
       headers: {
         "Content-Type": "application/json",
@@ -142,7 +142,6 @@ const ProHistory = () => {
                         <StyledTableCell align="right">Address</StyledTableCell>
                         <StyledTableCell align="right">Amount</StyledTableCell>
                         <StyledTableCell align="right">Description</StyledTableCell>
-                        
                         <StyledTableCell align="center">
                           Payment Status
                         </StyledTableCell>

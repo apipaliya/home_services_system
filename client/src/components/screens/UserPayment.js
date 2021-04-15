@@ -71,6 +71,12 @@ const UserPayment = () => {
               html: "Payment successfull",
               classes: "#43a047 green darken-1",
             });
+            var pid = { _pid: professionalsid };
+            console.log("pid", pid);
+            history.push({
+              pathname: "/userFeedback",
+              state: { pid },
+            });
           } else {
             M.toast({
               html: "Payment Failed,Try again",
@@ -138,38 +144,38 @@ const UserPayment = () => {
                 e.preventDefault();
                 setIsdateset(true);
                 razorPayPaymentHandler();
-                  fetch("/workSuccess", {
-                    method: "post",
-                    headers: {
-                      "Content-Type": "application/json",
-                      Authorization: "Bearer " + localStorage.getItem("jwt"),
-                    },
-                    body: JSON.stringify({
-                      _id:bookingid,
-                      payamount,
-                      description,
-                    }),
-                  })
-                    .then((res) => {
-                      if (res.error) {
-                        console.log(res.error);
-                      } else {
-                        res.json();
-                        M.toast({
-                          html: "Payment successfull",
-                          classes: "#43a047 green darken-1",
-                        });
-                        var pid = { _pid: professionalsid };
-                        console.log("pid", pid);
-                        history.push({
-                          pathname: "/userFeedback",
-                          state: { pid },
-                        });
-                      }
-                    })
-                    .catch((err) => {
-                      console.log(err);
-                    });
+                // fetch("/workSuccess", {
+                //   method: "post",
+                //   headers: {
+                //     "Content-Type": "application/json",
+                //     Authorization: "Bearer " + localStorage.getItem("jwt"),
+                //   },
+                //   body: JSON.stringify({
+                //     _id:bookingid,
+                //     payamount,
+                //     description,
+                //   }),
+                // })
+                //   .then((res) => {
+                //     if (res.error) {
+                //       console.log(res.error);
+                //     } else {
+                //       res.json();
+                //       M.toast({
+                //         html: "Payment successfull",
+                //         classes: "#43a047 green darken-1",
+                //       });
+                //       var pid = { _pid: professionalsid };
+                //       console.log("pid", pid);
+                //       history.push({
+                //         pathname: "/userFeedback",
+                //         state: { pid },
+                //       });
+                //     }
+                //   })
+                //   .catch((err) => {
+                //     console.log(err);
+                //   });
               }}
             >
               Pay Now<i className="far fa-paper-planeml-1"></i>

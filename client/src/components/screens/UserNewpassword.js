@@ -53,5 +53,4 @@ const UserNewpassword  = ()=>{
    )
 }
 
-
-export default UserNewpassword
+export default UserNewpassword;

@@ -8,7 +8,12 @@ import {
   MDBNavLink,
   MDBNavbarToggler,
   MDBCollapse,
+  MDBDropdown,
+  MDBDropdownToggle,
+  MDBDropdownMenu,
+  MDBDropdownItem,
 } from "mdbreact";
+
 import Button from "@material-ui/core/Button";
 import { useLocation } from "react-router-dom";
 
@@ -39,12 +44,22 @@ class UserNavBar extends Component {
               <MDBNavLink to="/userHome">Home</MDBNavLink>
             </MDBNavItem>
             <MDBNavItem>
-              <MDBNavLink to="/userBookings">Your Bookings</MDBNavLink>
+            <MDBDropdown>
+                <MDBDropdownToggle nav caret>
+                  <div className="d-md-inline d-sm-inline d-inline">
+                    Appointments
+                  </div>
+                </MDBDropdownToggle>
+                <MDBDropdownMenu className="dropdown-default">
+                  <MDBDropdownItem href="/userBookings">
+                    Your Bookings
+                  </MDBDropdownItem>
+                  <MDBDropdownItem href="/userHistory">
+                    History
+                  </MDBDropdownItem>
+                </MDBDropdownMenu>
+            </MDBDropdown>
             </MDBNavItem>
-            <MDBNavItem>
-              <MDBNavLink to="/userHistory">History</MDBNavLink>
-            </MDBNavItem>
-
             <MDBNavItem>
               <MDBNavLink to="/contactus">Contact Us</MDBNavLink>
             </MDBNavItem>

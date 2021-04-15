@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
+import Button from "@material-ui/core/Button";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
@@ -8,12 +9,13 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import ProNavBar from "./ProNavbar";
-import DoneOutlineIcon from "@material-ui/icons/DoneOutline";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import CancelIcon from "@material-ui/icons/Cancel";
-import Footer from "../Footer";
-import { useHistory } from "react-router";
+import Badge from "react-bootstrap/Badge";
+import { useHistory } from "react-router-dom";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -39,31 +41,42 @@ const useStyles = makeStyles({
   },
 });
 
-const ProWork = () => {
-  const history = useHistory();
+const ProPayment = () => {
   const classes = useStyles();
+  const history = useHistory();
+  const [open, setOpen] = React.useState(false);
+  const [payamount, setPayamount] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  const [paymentStatus, setPaymentstatus] = React.useState("");
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const [data, setdata] = useState([
     {
       // user
       name: "",
-      mobile: "",
+      email: "",
       city: "",
       _id: "",
     },
   ]);
+
   const [data1, setdata1] = useState([
     {
+      description: "",
+      payamount: "",
       address: "",
-      dateTime: "",
-      zipcode: "",
-      bookedBy: "",
-      _id: "",
+      paymentStatus: "",
     },
   ]);
 
   useEffect(() => {
-    fetch("/userpro/todo", {
+    fetch("/userPro/transaction", {
       method: "get",
       headers: {
         "Content-Type": "application/json",
@@ -89,7 +102,6 @@ const ProWork = () => {
   return (
     <>
       <ProNavBar />
-
       <br />
       <div className="content">
         <div className="container-fluid">
@@ -105,7 +117,7 @@ const ProWork = () => {
                     fontFamily: "Roboto !important",
                   }}
                 >
-                  <p className="m-auto text-center">TO DO</p>
+                  <p className="m-auto text-center">Pending Transaction</p>
                 </div>
               </div>
               <div className="card">
@@ -118,15 +130,16 @@ const ProWork = () => {
                       <TableRow>
                         <StyledTableCell>Customer Name</StyledTableCell>
                         <StyledTableCell align="right">
-                          Mobile No.
+                          Email id
                         </StyledTableCell>
                         <StyledTableCell align="right">
                           Date & Time
                         </StyledTableCell>
                         <StyledTableCell align="right">Address</StyledTableCell>
                         <StyledTableCell align="right">ZipCode</StyledTableCell>
-                        <StyledTableCell align="right">City</StyledTableCell>
-                       
+                        <StyledTableCell align="center">
+                          Status
+                        </StyledTableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -138,7 +151,7 @@ const ProWork = () => {
                             </StyledTableCell>
                             {data.length !== 0 && (
                               <StyledTableCell align="right">
-                                {data[index].mobile}
+                                {data[index].email}
                               </StyledTableCell>
                             )}
                             <StyledTableCell align="right">
@@ -150,13 +163,12 @@ const ProWork = () => {
                             <StyledTableCell align="right">
                               {data1.zipcode}
                             </StyledTableCell>
-                            {data.length !== 0 && (
-                              <StyledTableCell align="right">
-                                {data[index].city}
-                              </StyledTableCell>
-                            )}
 
-                            
+                            <StyledTableCell align="center">
+                              <h5>
+                                <Badge variant="dark">Pending</Badge>{" "}
+                              </h5>
+                            </StyledTableCell>
                           </StyledTableRow>
                         ))}
                     </TableBody>
@@ -171,4 +183,4 @@ const ProWork = () => {
   );
 };
 
-export default ProWork;
+export default ProPayment;

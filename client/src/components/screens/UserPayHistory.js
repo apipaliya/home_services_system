@@ -7,13 +7,13 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import ProNavBar from "./ProNavbar";
+import Badge from "react-bootstrap/Badge";
 import DoneOutlineIcon from "@material-ui/icons/DoneOutline";
-import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
+import Button from "@material-ui/core/Button";
 import CancelIcon from "@material-ui/icons/Cancel";
-import Footer from "../Footer";
 import { useHistory } from "react-router";
+import UserNavBar from "./UserNavbar";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -39,15 +39,16 @@ const useStyles = makeStyles({
   },
 });
 
-const ProWork = () => {
+const UserPayHistory = () => {
   const history = useHistory();
   const classes = useStyles();
 
   const [data, setdata] = useState([
     {
-      // user
+      // professional
       name: "",
       mobile: "",
+      profession: "",
       city: "",
       _id: "",
     },
@@ -57,13 +58,16 @@ const ProWork = () => {
       address: "",
       dateTime: "",
       zipcode: "",
-      bookedBy: "",
+      payamount: "",
+      description: "",
+      paymentStatus: "",
+      provider: "",
       _id: "",
     },
   ]);
 
   useEffect(() => {
-    fetch("/userpro/todo", {
+    fetch("/userworkDone", {
       method: "get",
       headers: {
         "Content-Type": "application/json",
@@ -74,9 +78,8 @@ const ProWork = () => {
       .then((datadetail) => {
         if (datadetail.error) {
           console.log(datadetail.error);
-          history.push("/loginpro");
+          history.push("/login");
         } else {
-          console.log(datadetail);
           setdata(datadetail[0]);
           setdata1(datadetail[1]);
         }
@@ -88,7 +91,7 @@ const ProWork = () => {
 
   return (
     <>
-      <ProNavBar />
+      <UserNavBar />
 
       <br />
       <div className="content">
@@ -105,7 +108,7 @@ const ProWork = () => {
                     fontFamily: "Roboto !important",
                   }}
                 >
-                  <p className="m-auto text-center">TO DO</p>
+                  <p className="m-auto text-center">Completed Appointments</p>
                 </div>
               </div>
               <div className="card">
@@ -116,7 +119,10 @@ const ProWork = () => {
                   >
                     <TableHead>
                       <TableRow>
-                        <StyledTableCell>Customer Name</StyledTableCell>
+                        <StyledTableCell>Name</StyledTableCell>
+                        <StyledTableCell align="right">
+                          Profession
+                        </StyledTableCell>
                         <StyledTableCell align="right">
                           Mobile No.
                         </StyledTableCell>
@@ -124,41 +130,62 @@ const ProWork = () => {
                           Date & Time
                         </StyledTableCell>
                         <StyledTableCell align="right">Address</StyledTableCell>
-                        <StyledTableCell align="right">ZipCode</StyledTableCell>
-                        <StyledTableCell align="right">City</StyledTableCell>
-                       
+                        <StyledTableCell align="right">Amount</StyledTableCell>
+                        <StyledTableCell align="right">
+                          Description
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          Payment
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          Status
+                        </StyledTableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {data1.length !== 0 &&
-                        data1.map((data1, index) => (
-                          <StyledTableRow key={index}>
+                      {data1.map((data1, index) => (
+                        <StyledTableRow key={index}>
+                          {data.length !== 0 && (
                             <StyledTableCell component="th" scope="row">
-                              {data.length !== 0 && data[index].name}
+                              {data[index].name}
                             </StyledTableCell>
-                            {data.length !== 0 && (
-                              <StyledTableCell align="right">
-                                {data[index].mobile}
-                              </StyledTableCell>
-                            )}
+                          )}
+                          {data.length !== 0 && (
                             <StyledTableCell align="right">
-                              {data1.dateTime}
+                              {data[index].profession}
                             </StyledTableCell>
+                          )}
+                          {data.length !== 0 && (
                             <StyledTableCell align="right">
-                              {data1.address}
+                              {data[index].mobile}
                             </StyledTableCell>
-                            <StyledTableCell align="right">
-                              {data1.zipcode}
-                            </StyledTableCell>
-                            {data.length !== 0 && (
-                              <StyledTableCell align="right">
-                                {data[index].city}
-                              </StyledTableCell>
-                            )}
-
+                          )}
+                          <StyledTableCell align="right">
+                            {data1.dateTime}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {data1.address}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {data1.payamount}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {data1.description}
+                          </StyledTableCell>
                             
-                          </StyledTableRow>
-                        ))}
+                          <StyledTableCell align="center">
+                            {data1.paymentStatus ? (
+                              <h5>
+                                <Badge variant="success">Success</Badge>{" "}
+                              </h5>
+                            ) : (
+                              <h5>
+                                <Badge variant="danger">Failed</Badge>{" "}
+                              </h5>
+                            )}
+                          </StyledTableCell>
+                        </StyledTableRow>
+                      ))}
                     </TableBody>
                   </Table>
                 </TableContainer>
@@ -171,4 +198,4 @@ const ProWork = () => {
   );
 };
 
-export default ProWork;
+export default UserPayHistory;
