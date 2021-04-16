@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 
 import {
   MDBNavbar,
@@ -11,11 +11,20 @@ import {
   MDBDropdown,
   MDBDropdownToggle,
   MDBDropdownMenu,
+  MDBListGroup,
+  MDBIcon,
+  MDBListGroupItem,
   MDBDropdownItem,
 } from "mdbreact";
 
 import Button from "@material-ui/core/Button";
-import { useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+
+var arr;
+const user = JSON.parse(localStorage.getItem("user"));
+if (user) {
+  arr = user.name.split(" ", 1);
+}
 
 class UserNavBar extends Component {
   state = {
@@ -39,12 +48,34 @@ class UserNavBar extends Component {
         </MDBNavbarBrand>
         <MDBNavbarToggler onClick={this.toggleCollapse} />
         <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
-          <MDBNavbarNav right>
+          <MDBNavbarNav right style={{ marginTop: "1rem" }}>
+            <MDBNavItem>
+              <MDBDropdown>
+                {
+                  <MDBDropdownToggle nav caret>
+                    <div className="d-md-inline d-sm-inline d-inline">
+                      <MDBIcon icon="user-circle" /> &nbsp;{arr}
+                    </div>
+                  </MDBDropdownToggle>
+                }
+                <MDBDropdownMenu className="dropdown-default">
+                  <MDBDropdownItem
+                    href="##"
+                    onClick={() => {
+                      localStorage.clear();
+                      window.location.href = "/";
+                    }}
+                  >
+                    LogOut
+                  </MDBDropdownItem>
+                </MDBDropdownMenu>
+              </MDBDropdown>
+            </MDBNavItem>
             <MDBNavItem>
               <MDBNavLink to="/userHome">Home</MDBNavLink>
             </MDBNavItem>
             <MDBNavItem>
-            <MDBDropdown>
+              <MDBDropdown>
                 <MDBDropdownToggle nav caret>
                   <div className="d-md-inline d-sm-inline d-inline">
                     Appointments
@@ -54,16 +85,15 @@ class UserNavBar extends Component {
                   <MDBDropdownItem href="/userBookings">
                     Your Bookings
                   </MDBDropdownItem>
-                  <MDBDropdownItem href="/userHistory">
-                    History
-                  </MDBDropdownItem>
+                  <MDBDropdownItem href="/userHistory">History</MDBDropdownItem>
                 </MDBDropdownMenu>
-            </MDBDropdown>
+              </MDBDropdown>
             </MDBNavItem>
             <MDBNavItem>
               <MDBNavLink to="/contactus">Contact Us</MDBNavLink>
             </MDBNavItem>
-            <MDBNavItem>
+
+            {/* <MDBNavItem>
               <MDBNavLink
                 to="##"
                 onClick={() => {
@@ -73,7 +103,7 @@ class UserNavBar extends Component {
               >
                 Logout
               </MDBNavLink>
-            </MDBNavItem>
+            </MDBNavItem> */}
           </MDBNavbarNav>
         </MDBCollapse>
       </MDBNavbar>

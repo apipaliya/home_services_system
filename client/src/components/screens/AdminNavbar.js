@@ -34,7 +34,6 @@ class AdminNavbar extends Component {
             <MDBNavItem>
               <MDBNavLink to="/adminTransaction">Transaction</MDBNavLink>
             </MDBNavItem>
-
             <MDBNavItem>
               <MDBNavLink to="/adminContact">Query</MDBNavLink>
             </MDBNavItem>

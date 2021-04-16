@@ -24,10 +24,11 @@ const UserPestcontrol = () => {
   const history = useHistory();
 
   const [open, setOpen] = React.useState(false);
-  let [review, setReview] = React.useState();
+  let [rev, setReview] = React.useState();
 
-  const handleClickToOpen = () => {
+  const handleClickToOpen = (revi) => {
     setOpen(true);
+    setReview(revi);
   };
 
   const handleToClose = () => {
@@ -68,7 +69,6 @@ const UserPestcontrol = () => {
           console.log(datadetail.error);
         } else {
           setProfessionals(datadetail);
-          console.log(datadetail[1].review.map((m) => m));
         }
       })
       .catch((err) => {
@@ -76,40 +76,38 @@ const UserPestcontrol = () => {
       });
   }, []);
 
-<Dialog open={open} onClose={handleToClose}>
-    <DialogTitle
-      style={{
-        color: "blue",
-        margin: "auto",
-        fontSize: "18px !important",  
-      }}
-    >
-      <b>Review</b>
-    </DialogTitle>
-    <DialogContent>
-      <DialogContentText style={{ color: "black" }}>
-        {review && console.log(review)}
-       
-        {/* {review.map((m) => (
-          <ul>
-            {" "}
-            <li> -&gt; {m} </li>{" "}
-          </ul>
-        ))} */}
-      </DialogContentText>
-    </DialogContent>
-    <DialogActions>
-      <Button onClick={handleToClose} color="primary" autoFocus>
-        Close
-      </Button>
-    </DialogActions>
-  </Dialog>; 
-
   return (
     <>
-     
       <UserNavBar />
       <MDBRow className="m-auto">
+        <Dialog open={open} onClose={handleToClose}>
+          <DialogTitle
+            style={{
+              color: "blue",
+              margin: "auto",
+              fontSize: "18px !important",
+            }}
+          >
+            <b>Review</b>
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText style={{ color: "black" }}>
+              {rev &&
+                rev.map((m) => (
+                  <ul>
+                    {" "}
+                    <li> -&gt; {m} </li>{" "}
+                  </ul>
+                ))}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleToClose} color="primary" autoFocus>
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
+        ;
         {professionals.map((pro, index) => {
           return (
             <>
@@ -174,7 +172,9 @@ const UserPestcontrol = () => {
                             className="flex m-auto text-white border-0 py-auto px-auto focus:outline-none rounded "
                             variant="contained"
                             color="primary"
-                            onClick={()=>{setReview({review:pro.review});handleClickToOpen();}}
+                            onClick={() => {
+                              handleClickToOpen(pro.review);
+                            }}
                           >
                             Review
                           </Button>

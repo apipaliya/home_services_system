@@ -35,7 +35,6 @@ import ProNewpassword from './components/screens/ProNewpassword';
 import ProReset from './components/screens/ProReset';
 import AdminTransaction from './components/screens/AdminTransaction';
 import ProPayment from './components/screens/ProPayment';
-import Payment from './components/screens/Payment';
 import UserPayment from './components/screens/UserPayment';
 
 export const UserContext = createContext()
@@ -128,9 +127,7 @@ const Routing = () => {
       <Route path="/userPayment">
         <UserPayment />
       </Route>
-      <Route path="/payment">
-        <Payment />
-      </Route>
+      
       <Route exact path="/user/reset">
         <UserReset />
       </Route>

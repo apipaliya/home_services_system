@@ -14,6 +14,7 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import PersonIcon from '@material-ui/icons/Person';
 import Footer from "../Footer";
 import { useHistory } from "react-router";
+import M from 'materialize-css';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -55,6 +56,14 @@ const Admin = () => {
     },
   ]);
 
+  const [data1, setdata1] = useState([
+    {
+      users:"",
+      bookings:"",
+      professionals:"",
+    },
+  ]);
+
   useEffect(() => {
     fetch("/verifyProfessional", {
       method: "get",
@@ -78,13 +87,36 @@ const Admin = () => {
       });
   }, []);
 
+  // useEffect(() => {
+  //   fetch("/showData", {
+  //     method: "get",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: "Bearer " + localStorage.getItem("jwt"),
+  //     },
+  //   })
+  //     .then((res) => res.json())
+  //     .then((datadetails) => {
+  //       if (datadetails.error) {
+  //         console.log(datadetails.error);
+  //         history.push("/adminLogin");
+  //       } else {
+  //         setdata1(datadetails[0]);
+  //         console.log(datadetails[0]);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
+
   return (
     <>
       <AdminNavbar />
 
       <br />
       
-      <div className="rows">
+      {/* <div className="rows">
               <div className="col-lg-4 col-md- col-sm-8">
                 <div className="card card-stats" >
                   <div className="card-header card-header-warning card-header-icon">
@@ -151,9 +183,9 @@ const Admin = () => {
                     </div>
                   </div>
                 </div>
-              </div> */}
               </div>
-      
+              </div> */}
+
       <div className="content">
         <div className="container-fluid">
           <div className="row">
@@ -218,7 +250,12 @@ const Admin = () => {
                           email: data.email,
                         }),
                       })
-                        .then((res) => res.json())
+                        .then((res) => {res.json();
+                          M.toast({
+                            html: "Post details successfully",
+                            classes: "#43a047 green darken-1",
+                          });
+                        })
                         .then((datadetail) => {
                           if (datadetail.error) {
                             console.log(datadetail.error);
@@ -234,7 +271,12 @@ const Admin = () => {
                                 email: data.email,
                               }),
                             })
-                              .then((res) => res.json())
+                              .then((res) => {res.json();
+                                M.toast({
+                                  html: "Mail sent successfully",
+                                  classes: "#43a047 green darken-1",
+                                });
+                              })
                               .then((datadetail) => {
                                 if (datadetail.error) {
                                   console.log(datadetail.error);
@@ -289,7 +331,11 @@ const Admin = () => {
                                 email: data.email,
                               }),
                             })
-                              .then((res) => res.json())
+                              .then((res) => {res.json();
+                                M.toast({
+                                  html: "Mail sent successfully",
+                                  classes: "#43a047 green darken-1",
+                                });})
                               .then((datadetail) => {
                                 if (datadetail.error) {
                                   console.log(datadetail.error);
