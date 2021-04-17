@@ -24,7 +24,7 @@ const Home = () => {
               />
             </div>
             <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
-              <h4>HELPING HANDS AT HOME</h4>
+              <h4 className="">HELPING HANDS AT HOME</h4>
               <br />
               <h1 className="title-font sm:text-3xl text-3xl mb-4 font-medium text-gray-900">
                 Quality Home Services, On Demand
@@ -33,12 +33,9 @@ const Home = () => {
                 Experianced, Hand-picked Professionals to serve you at doorstep
               </p>
               <div>
-                <select className="browser-default custom-select fa-wizards-of-the-coast">
-                  <option>Where do you need a service?</option>
-                  <option value="ahmedabad">Ahmedabad</option>
-                  <option value="rajkot">Rajkot</option>
-                  <option value="baroda">Baroda</option>
-                </select>
+                <p className="font-thin">
+                  Our professionals are well trained and have on-job expertise.
+                </p>
               </div>
             </div>
           </div>
