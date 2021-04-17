@@ -2,14 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Footer from "../Footer";
 import NavBar from "../Navbar";
-import {useLocation} from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Home = () => {
   const location = useLocation();
+  window.history.pushState(null, "", window.location.href);
+  window.onpopstate = function () {
     window.history.pushState(null, "", window.location.href);
-    window.onpopstate = function () {
-        window.history.pushState(null, "", window.location.href);
-    };
+  };
   return (
     <>
       <NavBar />
@@ -24,7 +24,7 @@ const Home = () => {
               />
             </div>
             <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
-              <h4 className="">HELPING HANDS AT HOME</h4>
+              <h4>HELPING HANDS AT HOME</h4>
               <br />
               <h1 className="title-font sm:text-3xl text-3xl mb-4 font-medium text-gray-900">
                 Quality Home Services, On Demand
@@ -41,7 +41,7 @@ const Home = () => {
           </div>
         </section>
       </div>
-    
+
       <div className="card card-home">
         <section className="text-gray-600 body-font">
           <div className="container px-5 py-24 mx-auto">

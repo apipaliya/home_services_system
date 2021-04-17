@@ -27,12 +27,9 @@ const UserHome = () => {
                 Experianced, Hand-picked Professionals to serve you at doorstep
               </p>
               <div>
-                <select className="browser-default custom-select fa-wizards-of-the-coast">
-                  <option>Where do you need a service?</option>
-                  <option value="ahmedabad">Ahmedabad</option>
-                  <option value="rajkot">Rajkot</option>
-                  <option value="baroda">Baroda</option>
-                </select>
+                <p className="font-thin">
+                  Our professionals are well trained and have on-job expertise.
+                </p>
               </div>
             </div>
           </div>
