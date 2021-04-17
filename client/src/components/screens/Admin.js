@@ -87,105 +87,13 @@ const Admin = () => {
       });
   }, []);
 
-  // useEffect(() => {
-  //   fetch("/showData", {
-  //     method: "get",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: "Bearer " + localStorage.getItem("jwt"),
-  //     },
-  //   })
-  //     .then((res) => res.json())
-  //     .then((datadetails) => {
-  //       if (datadetails.error) {
-  //         console.log(datadetails.error);
-  //         history.push("/adminLogin");
-  //       } else {
-  //         setdata1(datadetails[0]);
-  //         console.log(datadetails[0]);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
-
+  
   return (
     <>
       <AdminNavbar />
 
       <br />
       
-      {/* <div className="rows">
-              <div className="col-lg-4 col-md- col-sm-8">
-                <div className="card card-stats" >
-                  <div className="card-header card-header-warning card-header-icon">
-                    <div className="card-icon">
-                      <i className="material-icons">weekend</i>
-                    </div>
-                    <p className="card-category">Bookings</p>
-                    <h3 className="card-title">184</h3>
-                  </div>
-                  <div className="card-footer">
-                    <div className="stats" style={{display:'flex'}}>
-                      <i className="material-icons text-danger">warning</i>
-                      <a href="#pablo">Get More Space...</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-4 col-md-6 col-sm-6">
-                <div className="card card-stats">
-                  <div className="card-header card-header-rose card-header-icon">
-                    <div className="card-icon">
-                      <i className="material-icons">equalizer</i>
-                    </div>
-                    <p className="card-category">Website Visits</p>
-                    <h3 className="card-title">75.521</h3>
-                  </div>
-                  <div className="card-footer">
-                    <div className="stats" style={{display:'flex'}}>
-                      <i className="material-icons">local_offer</i> Tracked from Google Analytics
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-4 col-md-6 col-sm-6">
-                <div className="card card-stats">
-                  <div className="card-header card-header-success card-header-icon">
-                    <div className="card-icon">
-                      <i className="material-icons">store</i>
-                    </div>
-                    <p className="card-category">Revenue</p>
-                    <h3 className="card-title">$34,245</h3>
-                  </div>
-                  <div className="card-footer">
-                    <div className="stats"style={{display:'flex'}}>
-                      <i className="material-icons">date_range</i> Last 24 Hours
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* <div className="col-lg-3 col-md-6 col-sm-6">
-                <div className="card card-stats">
-                  <div className="card-header card-header-info card-header-icon">
-                    <div className="card-icon">
-                    <PersonIcon>
-                      <i className="material-icons"></i>
-                      </PersonIcon>
-                    </div>
-                    <p className="card-category">Followers</p>
-                    <h3 className="card-title">+245</h3>
-                  </div>
-                  <div className="card-footer" >
-                    <div className="stats" style={{display:'flex'}}>
-                      <i className="material-icons">update</i> Just Updated
-                    </div>
-                  </div>
-                </div>
-              </div>
-              </div> */}
-
       <div className="content">
         <div className="container-fluid">
           <div className="row">
@@ -250,12 +158,7 @@ const Admin = () => {
                           email: data.email,
                         }),
                       })
-                        .then((res) => {res.json();
-                          M.toast({
-                            html: "Post details successfully",
-                            classes: "#43a047 green darken-1",
-                          });
-                        })
+                        .then((res) => res.json())
                         .then((datadetail) => {
                           if (datadetail.error) {
                             console.log(datadetail.error);
@@ -271,12 +174,7 @@ const Admin = () => {
                                 email: data.email,
                               }),
                             })
-                              .then((res) => {res.json();
-                                M.toast({
-                                  html: "Mail sent successfully",
-                                  classes: "#43a047 green darken-1",
-                                });
-                              })
+                              .then((res) => res.json())
                               .then((datadetail) => {
                                 if (datadetail.error) {
                                   console.log(datadetail.error);

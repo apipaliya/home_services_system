@@ -16,7 +16,6 @@ import {
 
 var arr; 
 const user = JSON.parse(localStorage.getItem("user"));
-console.log(user);
 if (user) {
   arr = user.name.split(" ", 1);
 }
